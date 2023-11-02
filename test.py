@@ -1,9 +1,16 @@
+# install before import openai and dotenv
+# $pip install openai
+# $pip install dotenv
 import openai
 from dotenv import dotenv_values
+
+# read the file ".env" and get the API key
 openai.api_key = dotenv_values('.env')["API_KEY"]
 
-from types import resolve_bases
-
+# set prompt with:
+# a)request
+# b)expecting format
+# c)example
 prompt = """
 我希望將以下資料抽取部分欄位轉換成以表格呈現的結構化資料
 ===
@@ -73,10 +80,13 @@ Skin, nasal bridge, excisional biopsy --- Basal cell carcinoma
 ...以此類推
 ===
   """
+
+# send repuest
 res = openai.Completion.create(
         model="text-davinci-003",
         prompt=prompt,
         max_tokens = 1000
     )
 
+# print respond
 print (res["choices"][0]["text"])

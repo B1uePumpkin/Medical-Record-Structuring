@@ -12,7 +12,7 @@ openai.api_key = dotenv_values('.env')["API_KEY"]
 # b)expecting format
 # c)example
 prompt = """
-我希望將以下資料抽取部分欄位轉換成以表格呈現的結構化資料
+我希望將以下資料抽取部分欄位轉換成有主次關係的表格呈現結構化資料
 ===
 SNOMED:59000-A-81403.
 
@@ -74,6 +74,7 @@ Skin, nasal bridge, excisional biopsy --- Basal cell carcinoma
 | --- | --- |
 | 診斷資料號 | 59000-A-81403 |
 | 診斷結果 | Bloody stool   |
+| **檢體觀察** |  |
 | 組織片數 | 5片 |
 | 組織尺寸 | 0.1*0.1*0.1 cm |
 | 組織外觀 | 灰 |

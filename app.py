@@ -9,29 +9,33 @@ app = Flask(__name__)
 
 # 預先定義的固定prompt
 fixed_prompt = """
-請先完整查看輸入內容
-根據以下結構產生完整表格，此表格只是架構範例，內容請看輸入病例:
-輸出範例(請根據使用者輸入內容做判斷，勿直接填入範例內容):
+首先完整查看使用者輸入的病例內容，再來根據這些信息產生一份完整的病例表格，格式內容請參考下面輸出範例，請確保內容須正確相符、完整並對齊，最後檢查內容無誤再以繁體中文輸出，專有名詞除外。
+以下是輸出範例格式:
+===
+
+首先完整查看使用者輸入的病例內容，再來根據這些信息產生一份完整的病例表格，格式內容請參考下面輸出範例，請確保內容須正確相符、完整並對齊，最後檢查內容無誤再以繁體中文輸出，專有名詞除外。
+
+以下是輸出範例格式:
 ===
 
 | 欄位 | 資料 |  
 
 | --- | --- |
 
-| 診斷資料號 | 59000-A-81403 |
+| 診斷資料號 | 資料號 |
 
-| 診斷結果 | Bloody stool   |
+| 診斷結果 | 結果 |
 
-| 組織片數 | 5片 |
+| 組織片數 | 片數 |
 
-| 組織尺寸 | 0.1*0.1*0.1 cm |  
+| 組織尺寸 | 切片尺寸大小 |  
 
-| 組織外觀 | 灰 |
+| 組織外觀 | 顏色，形狀 |
 
 ...以此類推
 ===
-除了專有名詞，其餘請以繁體中文顯示，內容須正確完整並對齊
 """
+
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -66,7 +70,7 @@ def index():
         return html
 
     # 顯示輸入表單
-    return "<html><body><form method='post'><label for='prompt'>請輸入病例：</label><input type='text' name='prompt' size='100'><input type='submit' value='提交'></form></body></html>"
+    return "<html><body><form method='post'><label for='prompt'>請輸入病例：</label><br/> <textarea name='prompt' rows='50' cols='100'></textarea><input type='submit' value='提交'></form></body></html>"
 
 if __name__ == "__main__":
     app.run()

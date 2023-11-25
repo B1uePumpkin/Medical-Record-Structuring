@@ -1,0 +1,26 @@
+
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <form method='post'>
+            <label for='prompt'>請輸入病例：</label><br/>
+            <textarea name='prompt' rows='10' style='width: 100%; height: 300px; font-size: 16px;'></textarea>
+            <br/>
+            <input type='submit' value='提交' class='submit-btn'>
+        </form>
+        <table>
+            {% for line in lines %}
+                {% if "|" in line %}
+                    {% set columns = line.split("|") %}
+                    <tr>
+                        {% for col in columns %}
+                            <td>{{ col.strip() }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+    </body>
+</html>

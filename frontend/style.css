@@ -1,0 +1,37 @@
+/* frontend/static/style.css */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 50px;
+    background-color: #f8f9fa; /* 背景顏色 */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #ffffff; /* 表格背景顏色 */
+}
+
+th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+#back-btn {
+    padding: 15px 20px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+}
+
+.submit-btn {
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 15px 20px;
+}

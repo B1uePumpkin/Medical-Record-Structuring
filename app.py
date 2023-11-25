@@ -18,9 +18,9 @@ fixed_prompt = """
 
 | 診斷資料號 | 資料號 |
 
-| 病史 | 病人病史 |
+| 病史 | CLINICAL HISTORY |
 
-| 診斷結果 | 診斷結果 |
+| 診斷 | DIAGNOSIS |
 
 | 組織片數 | 片數 |
 

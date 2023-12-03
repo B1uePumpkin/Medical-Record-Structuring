@@ -1,4 +1,3 @@
-
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
@@ -10,10 +9,14 @@
             <br/>
             <input type='submit' value='提交' class='submit-btn'>
         </form>
+
+<!-- 顯示生成的表格 -->
+{% if lines %}
+    <div class='result'>
         <table>
             {% for line in lines %}
-                {% if "|" in line %}
-                    {% set columns = line.split("|") %}
+                {% if '|' in line %}
+                    {% set columns = line.split('|') %}
                     <tr>
                         {% for col in columns %}
                             <td>{{ col.strip() }}</td>
@@ -22,5 +25,9 @@
                 {% endif %}
             {% endfor %}
         </table>
-    </body>
-</html>
+    </div>
+
+    <!-- 新增下載按鈕 -->
+    <a href="{{ url_for('download_txt') }}" class='btn btn-success'>下載病例表格 (txt)</a>
+    <a href="{{ url_for('download_word') }}" class='btn btn-info'>下載病例表格 (docx)</a>
+{% endif %}

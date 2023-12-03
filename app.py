@@ -2,6 +2,8 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_mysqldb import MySQL
 from dotenv import dotenv_values
+from flask import send_file
+from docx import Document
 import openai
 
 app = Flask(__name__, template_folder='frontend')
@@ -132,6 +134,35 @@ def index():
 def logout():
     session.pop('user', None)
     return redirect(url_for('login'))
+
+@app.route("/download_txt", methods=["GET"])
+def download_txt():
+    # 檔案路徑
+    file_path = "result.txt"
+    
+    # 回傳檔案至使用者
+    return send_file(file_path, as_attachment=True, download_name="病例表格.txt")
+
+# 新增路由用於處理下載 Word 文件請求
+@app.route("/download_word", methods=["GET"])
+def download_word():
+    # 檔案路徑
+    txt_file_path = "result.txt"
+    word_file_path = "result.docx"
+
+    # 讀取 txt 檔案內容
+    with open(txt_file_path, "r", encoding="utf-8") as txt_file:
+        txt_content = txt_file.read()
+
+    # 創建 Word 文件
+    doc = Document()
+    doc.add_paragraph(txt_content)
+
+    # 儲存 Word 文件
+    doc.save(word_file_path)
+
+    # 回傳 Word 檔案至使用者
+    return send_file(word_file_path, as_attachment=True, download_name="病例表格.docx")
 
 if __name__ == "__main__":
     app.secret_key = '000000'  # Set your secret key for session encryption

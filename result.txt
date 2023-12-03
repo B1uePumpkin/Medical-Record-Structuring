@@ -1,17 +1,16 @@
-答案：
-SNOMED: 87000-B-72110 
-病史: Right ovarian cyst, R/O Endometriosis 
-診斷: Ovary, right, laparoscopic partial oophorectomy--- Endometriosis 
-組織片數: 5片 
-組織尺寸: 7.0 x 4.2 x 0.5 cm 
-組織部位: Membranous ovarian cyst wall 
-切片方式: Fresh state 
-處理方式: Representative sections 
-組織顏色: Congested and smooth 
-組織形狀: Rough and coated with old blood clots 
-顯微鏡檢查: Sectons show ovarian cyst lined by ectopic endometrial gland with stroma, an endometriotic cyst. Collections of large amount of hemosiderin pigment are also noted, No evidence of malignancy is found.
-參考資料: S12-00546, Uterus, endometrium, HSC resection --- Retained placenta; S02-05258, Ovary, left, oophocystectomy --- Endometriosis 
+SNOMED: N/A 
+病史: Lymphadenitis, unspecified, except mesenteric 
+診斷: Negative for malignancy 
+組織片數: N/A 
+組織尺寸: N/A 
+組織部位: Neck mass aspiration 
+切片方式: N/A 
+處理方式: N/A 
+組織顏色: N/A 
+組織形狀: N/A 
+顯微鏡檢查: Optimal for interpretation 
+參考資料: N/A 
 住院醫師: N/A 
-病理醫師: Shu-Han Huang, M.D./SWH 
-細胞醫檢師: N/A 
-病理專醫字: 病理專醫字第000477號 
+病理醫師: Shu-Han Huang, M.D. 
+細胞醫檢師: 黃靚怡 
+病理專醫字: 病解專醫字第 000477 號 

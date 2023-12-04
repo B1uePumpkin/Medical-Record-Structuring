@@ -1,16 +1,16 @@
-SNOMED: 59000-B-82100,59000-B-82611 
-病史: Intestine, large, colon, labeled ""#A, 40 cm. level"", colonoscopic polypectomy --- Tubular adenoma; Intestine, large, colon,labeled ""#B, 20 cm. level"", colonoscopic polypectomy --- Tubulovillous adenoma 
-診斷: N/A 
-組織片數: 兩片 
-組織尺寸: Specimen A: 0.4 x 0.3 x 0.2 cm; Specimen B: 1.5 x 1.2 x 0.6 cm 
-組織部位: Intestine, large, colon 
-切片方式: Colonoscopic polypectomy 
-處理方式: Fixed in formalin 
-組織顏色: Gray 
+SNOMED: 59000-A-81403 
+病史: Bloody stool 
+診斷: Intestine, large, labeled as "Ascending colon", endoscopic biopsy --- Adenocarcinoma 
+組織片數: 5  
+組織尺寸: 0.5 x 0.2 x 0.2 cm 
+組織部位: N/A 
+切片方式: All for section is taken 
+處理方式: Formalin-fixed 
+組織顏色: Gray white 
 組織形狀: Elastic 
-顯微鏡檢查: Section A shows polypoid colonic mucosa with hyperplastic tubular and mild dysplastic glands lined by hyperchromatic glandular cells; Section B shows polypoid colonic mucosa with focal villousstructures and hyperplastic tubular glands lined by stratified hyperchromatic glandular cells, focal mild to moderate dysplastic glands seen, with no evidence of malignancy 
-參考資料: S13-01570, Stomach, mid body, endoscopic biopsy --- Body gland polyp; S12-19383, Breast, left,10 o'clock/2 cm position, needle biopsy --- Negative for malignancy --- Fibrocystic change; S12-17897, Stomach, mid body, endoscopic biopsy --- Adenomatous polyp; S12-17898, Intestine, large, labeled as At 40 cm. level, colonoscopic polypectomy --- Tubular adenoma 
+顯微鏡檢查: Section shows fragments of necrotic debris and colon mucosa with proliferation and infiltration of irregular hyperchromatic neoplastic glands arranged mainly in complicated tubulo-papillary fashion, a moderately differentiated adenocarcinoma. Remnants suggestive of a pre-existing adenoma are not seen. 
+參考資料: S04-05069, Gall bladder, cholecystectomy --- Acute gangrenous cholecystitis; S01-01737, Skin, nasal bridge, excisional biopsy --- Basal cell carcinoma 
 住院醫師: N/A 
-病理醫師: Chin-Cheng Lee, M.D./SWH 
+病理醫師: Shu-Han Huang, M.D./SWH 
 細胞醫檢師: N/A 
-病理專醫字: 病理專醫字第0158號 
+病理專醫字: 病解專醫字第000477號 

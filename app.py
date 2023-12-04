@@ -27,7 +27,7 @@ mysql = MySQL(app)
 
 # 預先定義的固定 prompt
 fixed_prompt = """
-首先完整查看使用者輸入的病例內容，再來根據這些信息產生一份完整的病例表格，格式內容請參考下面輸出範例，沒有或空白的資料請填入"N/A"，請確保欄位和資料內容須正確相符、完整且必須對齊，表格結構需要正確，最後檢查內容無誤再以病歷原文以及英文輸出
+首先完整查看使用者輸入的病例內容，再來根據這些信息產生一份完整的病例表格，格式內容請參考下面輸出範例，沒有或空白的資料請填入"N/A"，請確保欄位和資料內容須正確相符、完整且必須對齊，表格結構需要正確，最後檢查內容無誤再以病歷原文以及英文輸出，不要自動翻譯成其他語言
 以下是輸出範例格式，注意不要跑版，並且要按照飯裡順序:  
 |SNOMED:| SNOMED |
 |病史:| CLINICAL HISTORY |
@@ -90,6 +90,11 @@ def login_home():
         return render_template("login.html", error_message=error_message)
 
     return render_template("login.html")
+
+@app.route('/instructions')
+def show_instructions():
+    # 这里可以加入返回使用说明的逻辑
+    return render_template('instructions.html')
 
 # Index route
 @app.route("/index", methods=["GET", "POST"])

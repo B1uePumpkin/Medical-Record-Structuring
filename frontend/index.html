@@ -1,33 +1,56 @@
-<html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-    </head>
-    <body>
+<!-- frontend/templates/index.html -->
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>病歷結構化系統</title>
+</head>
+<body>
+    <div class="container">
+        <!-- 新增大標題 -->
+        <div class="page-title">病歷結構化系統</div>
+
         <form method='post'>
             <label for='prompt'>請輸入病例：</label><br/>
-            <textarea name='prompt' rows='10' style='width: 100%; height: 300px; font-size: 16px;'></textarea>
+            <textarea name='prompt' rows='15' class='input-textarea'></textarea>
             <br/>
             <input type='submit' value='提交' class='submit-btn'>
         </form>
 
-<!-- 顯示生成的表格 -->
-{% if lines %}
-    <div class='result'>
-        <table>
-            {% for line in lines %}
-                {% if '|' in line %}
-                    {% set columns = line.split('|') %}
-                    <tr>
-                        {% for col in columns %}
-                            <td>{{ col.strip() }}</td>
-                        {% endfor %}
-                    </tr>
-                {% endif %}
-            {% endfor %}
-        </table>
-    </div>
+        <!-- 新增使用說明按鈕 -->
+        <div class='instructions-btn'>
+            <a href="{{ url_for('show_instructions') }}" class='btn btn-primary'>使用說明</a>
+        </div>
 
-    <!-- 新增下載按鈕 -->
-    <a href="{{ url_for('download_txt') }}" class='btn btn-success'>下載病例表格 (txt)</a>
-    <a href="{{ url_for('download_word') }}" class='btn btn-info'>下載病例表格 (docx)</a>
-{% endif %}
+        {% if lines %}
+        <div class='result'>
+            <table>
+                {% for line in lines %}
+                    {% if '|' in line %}
+                        {% set columns = line.split('|') %}
+                        <tr>
+                            {% for col in columns %}
+                                <td>{{ col.strip() }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+            
+            <!-- 新增下載按鈕 -->
+            <div class='download-buttons'>
+                <a href="{{ url_for('download_txt') }}" class='btn btn-success'>下載病例表格 (txt)</a>
+                <a href="{{ url_for('download_word') }}" class='btn btn-info'>下載病例表格 (docx)</a>
+            </div>
+
+            <!-- 新增登出按鈕 -->
+            <div id="logout-container">
+                <a href="{{ url_for('logout') }}" class='btn btn-danger'>登出</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+/* frontend/static/instruction.css */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e9ecef; /* 背景顏色 */
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #ffffff; /* 白色容器 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: #007bff; /* 藍色標題 */
+}
+
+p {
+    color: #555;
+}
+
+ol {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+li {
+    margin-bottom: 8px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 20px;
+    margin-top: 20px;
+    background-color: #007bff; /* 藍色按鈕 */
+    color: #ffffff;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* 藍色按鈕懸停時的顏色 */
+}

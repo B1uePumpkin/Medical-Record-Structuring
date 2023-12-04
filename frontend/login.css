@@ -1,7 +1,7 @@
 /* login.css */
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     background-color: #f4f4f4;
     margin: 0;
     padding: 0;
@@ -12,17 +12,18 @@ body {
 }
 
 .container {
-    width: 300px;
+    width: 500px;
     padding: 16px;
     background-color: #fff; /* 白色背景 */
     border: 1px solid #ccc;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
+    text-align: center;
 }
 
-.container h2 {
-    text-align: center;
+.container h1 {
     color: #333;
+    margin-bottom: 20px;
 }
 
 .container label {
@@ -31,20 +32,14 @@ body {
     margin: 8px 0;
 }
 
-.container input[type=text], .container input[type=password] {
+.container input[type=text],
+.container input[type=password] {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
     border: 1px solid #ccc;
     box-sizing: border-box;
-}
-
-.container input[type=text] {
-    background-color: #f2f2f2; /* 輸入框背景色 */
-}
-
-.container input[type=password] {
     background-color: #f2f2f2; /* 輸入框背景色 */
 }
 
@@ -56,6 +51,7 @@ body {
     border: none;
     cursor: pointer;
     width: 100%;
+    border-radius: 4px; /* 添加圓角 */
 }
 
 .container button:hover {

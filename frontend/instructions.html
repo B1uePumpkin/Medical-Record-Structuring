@@ -1,0 +1,23 @@
+<!-- frontend/instructions.html -->
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='instruction.css') }}">
+    <title>使用說明</title>
+</head>
+<body>
+    <div class="container">
+        <h2>病歷格式化系統使用說明</h2>
+        <p>歡迎使用病歷格式化系統！以下是使用說明的一些步驟：</p>
+        <ol>
+            <li>在首頁的輸入框中輸入病例內容。</li>
+            <li>點擊提交按鈕，系統會生成相應的病例表格。</li>
+            <li>您可以下載生成的病例表格，支持 txt 和 docx 格式。</li>
+            <li>若有任何問題或需要協助，請聯繫我們的客服。</li>
+        </ol>
+        <a href="{{ url_for('index') }}" class="btn btn-primary">返回首頁</a>
+    </div>
+</body>
+</html>

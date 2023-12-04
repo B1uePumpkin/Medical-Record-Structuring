@@ -1,21 +1,24 @@
+<!-- login.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
-    <title>Login</title>
+    <title>歡迎使用病歷格式化系統</title>
 </head>
 <body>
-    <h2>Login</h2>
-    <form method="POST" action="/login">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
+    <div class="container">
+        <h1>歡迎使用病歷格式化系統</h1>
+        <form method="POST" action="/login">
+            <label for="username">請輸入帳號:</label>
+            <input type="text" id="username" name="username" required>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
+            <label for="password">請輸入密碼:</label>
+            <input type="password" id="password" name="password" required>
 
-        <button type="submit">Login</button>
-    </form>
+            <button type="submit">登入</button>
+        </form>
+    </div>
 </body>
 </html>

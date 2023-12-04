@@ -1,16 +1,16 @@
-SNOMED: N/A 
-病史: Lymphadenitis, unspecified, except mesenteric 
-診斷: Negative for malignancy 
-組織片數: N/A 
-組織尺寸: N/A 
-組織部位: Neck mass aspiration 
-切片方式: N/A 
-處理方式: N/A 
-組織顏色: N/A 
-組織形狀: N/A 
-顯微鏡檢查: Optimal for interpretation 
-參考資料: N/A 
+SNOMED: 59000-B-82100, 59000-B-82611
+病史: Intestine, large, colon, labeled ""#A, 40 cm. level"", colonoscopic polypectomy --- Tubular adenoma Intestine, large, colon, labeled ""#B, 20 cm. level"", colonoscopic polypectomy --- Tubulovillous adenoma
+診斷: N/A 
+組織片數: 2 
+組織尺寸: 0.4 x 0.3 x 0.2 cm、1.5 x 1.2 x 0.6 cm 
+組織部位: Colon 
+切片方式: Colonoscopic polypectomy 
+處理方式: Fixed in formalin 
+組織顏色: Gray 
+組織形狀: Elastic
+顯微鏡檢查: Polypoid colonic mucosa with hyperplastic tubular glands; Focal villous structures; Mild to moderate dysplastic glands; No evidence of malignancy
+參考資料:S13-01570, S12-19383, S12-17897, S12-17898
 住院醫師: N/A 
-病理醫師: Shu-Han Huang, M.D. 
-細胞醫檢師: 黃靚怡 
-病理專醫字: 病解專醫字第 000477 號 
+病理醫師: Chin-Cheng Lee, M.D. 
+細胞醫檢師: N/A 
+病理專醫字: 158 

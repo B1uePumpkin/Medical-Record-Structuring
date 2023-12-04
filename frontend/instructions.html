@@ -4,20 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='instruction.css') }}">
     <title>使用說明</title>
 </head>
 <body>
     <div class="container">
-        <h2>病歷格式化系統使用說明</h2>
-        <p>歡迎使用病歷格式化系統！以下是使用說明的一些步驟：</p>
+        <h1>病歷格式化系統使用說明</h1>
+        <br>
+        <br>
+        <h3>歡迎使用病歷格式化系統！以下是使用說明的一些步驟：</h3>
         <ol>
-            <li>在首頁的輸入框中輸入病例內容。</li>
+            <li>請在在首頁的輸入框中輸入病歷內容。</li>
             <li>點擊提交按鈕，系統會生成相應的病例表格。</li>
             <li>您可以下載生成的病例表格，支持 txt 和 docx 格式。</li>
-            <li>若有任何問題或需要協助，請聯繫我們的客服。</li>
+            <li>最後點擊登出可以回到登入頁面。</li>
         </ol>
         <a href="{{ url_for('index') }}" class="btn btn-primary">返回首頁</a>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>

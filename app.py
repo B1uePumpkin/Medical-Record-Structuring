@@ -27,7 +27,7 @@ mysql = MySQL(app)
 
 # 預先定義的固定 prompt
 fixed_prompt = """
-首先完整查看使用者輸入的病例內容，再來根據這些信息產生一份完整的病例表格，格式內容請參考下面輸出範例，沒有或空白的資料請填入"N/A"，請確保欄位和資料內容須正確相符、完整且必須對齊，表格結構需要正確，最後檢查內容無誤再以病歷原文以及英文輸出，不要自動翻譯成其他語言
+首先完整查看使用者輸入的病例內容，再來根據這些信息產生一份完整的病例表格，格式內容請參考下面輸出範例，沒有或空白的資料請填入"N/A"，請確保欄位和資料內容須正確相符、完整且必須對齊，表格結構需要正確，最後檢查內容無誤再以病歷原文英文輸出，
 以下是輸出範例格式，注意不要跑版，並且要按照飯裡順序:  
 |SNOMED:| SNOMED |
 |病史:| CLINICAL HISTORY |
@@ -168,6 +168,7 @@ def download_word():
 
     # 回傳 Word 檔案至使用者
     return send_file(word_file_path, as_attachment=True, download_name="病例表格.docx")
+
 
 if __name__ == "__main__":
     app.secret_key = '000000'  # Set your secret key for session encryption

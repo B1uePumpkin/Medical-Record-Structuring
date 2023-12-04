@@ -1,16 +1,16 @@
-SNOMED: 59000-B-82100, 59000-B-82611
-病史: Intestine, large, colon, labeled ""#A, 40 cm. level"", colonoscopic polypectomy --- Tubular adenoma Intestine, large, colon, labeled ""#B, 20 cm. level"", colonoscopic polypectomy --- Tubulovillous adenoma
+SNOMED: 59000-B-82100,59000-B-82611 
+病史: Intestine, large, colon, labeled ""#A, 40 cm. level"", colonoscopic polypectomy --- Tubular adenoma; Intestine, large, colon,labeled ""#B, 20 cm. level"", colonoscopic polypectomy --- Tubulovillous adenoma 
 診斷: N/A 
-組織片數: 2 
-組織尺寸: 0.4 x 0.3 x 0.2 cm、1.5 x 1.2 x 0.6 cm 
-組織部位: Colon 
+組織片數: 兩片 
+組織尺寸: Specimen A: 0.4 x 0.3 x 0.2 cm; Specimen B: 1.5 x 1.2 x 0.6 cm 
+組織部位: Intestine, large, colon 
 切片方式: Colonoscopic polypectomy 
 處理方式: Fixed in formalin 
 組織顏色: Gray 
-組織形狀: Elastic
-顯微鏡檢查: Polypoid colonic mucosa with hyperplastic tubular glands; Focal villous structures; Mild to moderate dysplastic glands; No evidence of malignancy
-參考資料:S13-01570, S12-19383, S12-17897, S12-17898
+組織形狀: Elastic 
+顯微鏡檢查: Section A shows polypoid colonic mucosa with hyperplastic tubular and mild dysplastic glands lined by hyperchromatic glandular cells; Section B shows polypoid colonic mucosa with focal villousstructures and hyperplastic tubular glands lined by stratified hyperchromatic glandular cells, focal mild to moderate dysplastic glands seen, with no evidence of malignancy 
+參考資料: S13-01570, Stomach, mid body, endoscopic biopsy --- Body gland polyp; S12-19383, Breast, left,10 o'clock/2 cm position, needle biopsy --- Negative for malignancy --- Fibrocystic change; S12-17897, Stomach, mid body, endoscopic biopsy --- Adenomatous polyp; S12-17898, Intestine, large, labeled as At 40 cm. level, colonoscopic polypectomy --- Tubular adenoma 
 住院醫師: N/A 
-病理醫師: Chin-Cheng Lee, M.D. 
+病理醫師: Chin-Cheng Lee, M.D./SWH 
 細胞醫檢師: N/A 
-病理專醫字: 158 
+病理專醫字: 病理專醫字第0158號 

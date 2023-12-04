@@ -1,4 +1,6 @@
 /* frontend/static/instruction.css */
+
+/* 這裡保留您原有的樣式，不需修改 */
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -14,11 +16,11 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-h2 {
+h1 {
     color: #007bff; /* 藍色標題 */
 }
 
-p {
+h3 {
     color: #555;
 }
 
@@ -28,18 +30,20 @@ ol {
 }
 
 li {
-    margin-bottom: 8px;
+    margin-bottom: 30px;
 }
+
+ol {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 20px; /* 調整字體大小 */
+}
+
 
 .btn {
     display: inline-block;
     padding: 12px 20px;
     margin-top: 20px;
-    background-color: #007bff; /* 藍色按鈕 */
-    color: #ffffff;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
     border-radius: 4px;
     text-align: center;
 }

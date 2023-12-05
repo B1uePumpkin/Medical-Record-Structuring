@@ -9,20 +9,20 @@ import openai
 app = Flask(__name__, template_folder='frontend')
 app.static_folder = 'frontend'
 
-# Load configuration from .env
+# 從 .env 載入配置
 dotenv_config = dotenv_values(".env")
 
-# Set your OpenAI API key
+# 設定 OpenAI API 金鑰
 api_key = dotenv_config.get('API_KEY')
 openai.api_key = api_key
 
-# MySQL configuration
+# MySQL 配置
 app.config['MYSQL_HOST'] = dotenv_config['MYSQL_HOST']
 app.config['MYSQL_USER'] = dotenv_config['MYSQL_USER']
 app.config['MYSQL_PASSWORD'] = dotenv_config['MYSQL_PASSWORD']
 app.config['MYSQL_DB'] = dotenv_config['MYSQL_DB']
 
-# Initialize MySQL
+# 初始化 MySQL
 mysql = MySQL(app)
 
 # 預先定義的固定 prompt
@@ -46,20 +46,20 @@ fixed_prompt = """
 |病理專醫字:| 病理專醫字 |
 """
 
-# 登入路由
+# 登入系統
 @app.route("/", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
 
-        # Check if the user exists in the database
+        # 檢查使用者是否存在於資料庫
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM users WHERE username = %s AND password = %s", (username, password))
         user = cur.fetchone()
         cur.close()
 
-        # If the user exists, set them as logged in
+        # 如果使用者存在，設置其為已登入
         if user:
             session['user'] = user
             return redirect(url_for('index'))
@@ -73,18 +73,18 @@ def login_home():
         username = request.form["username"]
         password = request.form["password"]
 
-        # Check if the user exists in the database
+        # 檢查使用者是否存在於資料庫
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM users WHERE username = %s AND password = %s", (username, password))
         user = cur.fetchone()
         cur.close()
 
-        # If the user exists, set them as logged in and redirect to index
+        # 如果使用者存在，設置其為已登入並導向到 index
         if user:
             session['user'] = user
             return redirect(url_for('index'))
 
-        # If the user does not exist or the password is incorrect, show an error message
+        # 如果使用者不存在或密碼不正確，顯示錯誤訊息
         error_message = "Invalid username or password. Please try again."
         return render_template("login.html", error_message=error_message)
 
@@ -92,49 +92,48 @@ def login_home():
 
 @app.route('/instructions')
 def show_instructions():
-    # 这里可以加入返回使用说明的逻辑
+    # 在這裡可以加入返回使用說明的邏輯
     return render_template('instructions.html')
 
-# Index route
+# Index 路由
 @app.route("/index", methods=["GET", "POST"])
 def index():
-    if 'user' in session:
+    if 'user' in session:  #判斷是否有使用者已經登入
         user = session['user']
-
-        if request.method == "POST":
+            #處理 POST 請求。當接收到 POST 請求時，從表單中取得使用者輸入的文字
+        if request.method == "POST":  
             user_input = request.form["prompt"]
             combined_prompt = fixed_prompt + user_input
 
-            # Generate result from OpenAI API
+            # 使用 OpenAI API 生成結果
             res = openai.Completion.create(
                 model="text-davinci-003",
                 prompt=combined_prompt,
                 max_tokens=1000,
-                temperature = 0
+                temperature=0
             )
             text = res["choices"][0]["text"]
 
-            # Convert text to HTML
+            # 將文字轉換為 HTML
             lines = text.split("\n")
             lines = [line.strip() for line in lines]
 
-            # Save text as a plain text file
-            save_txt_path = "result.txt"
+             #將結果轉換為 HTML 格式，同時保存為純文字檔案
+            save_txt_path = "result.txt" 
             with open(save_txt_path, "w", encoding="utf-8") as txt_file:
                 for line in lines:
                     clean_line = line.replace("|", "")
                     if clean_line.strip():
                         txt_file.write(clean_line + "\n")
 
-            return render_template("index.html", lines=lines)
+            return render_template("index.html", lines=lines)  #將結果傳遞給模板並返回
 
         return render_template("index.html", user=user)
 
     else:
         return redirect(url_for('login'))
 
-
-# Logout route
+# 登出系統
 @app.route("/logout")
 def logout():
     session.pop('user', None)
@@ -144,7 +143,7 @@ def logout():
 def download_txt():
     # 檔案路徑
     file_path = "result.txt"
-    
+
     # 回傳檔案至使用者
     return send_file(file_path, as_attachment=True, download_name="病例表格.txt")
 
@@ -171,5 +170,5 @@ def download_word():
 
 
 if __name__ == "__main__":
-    app.secret_key = '000000'  # Set your secret key for session encryption
+    app.secret_key = '000000'  # 設置用於會話加密的秘密金鑰
     app.run()

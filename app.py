@@ -32,10 +32,10 @@ fixed_prompt = """
 |病史:| CLINICAL HISTORY |
 |診斷:| DIAGNOSIS |
 |組織片數:| 片數 |
-|組織尺寸:| 切片尺寸大小 | 
+|組織尺寸:| 1x1x1 cm | 
 |組織部位:| 組織或切片部位 |
-|切片方式:| 切片組織獲得方法 |  
-|處理方式:| 組織處理方式 | 
+|切片方式:| Colonoscopy |  
+|處理方式:| fixed in formalin | 
 |組織顏色:| 組織切片顏色 |
 |組織形狀:| 組織切片形狀 |
 |顯微鏡檢查:| 顯微鏡檢查結果 |
@@ -109,7 +109,8 @@ def index():
             res = openai.Completion.create(
                 model="text-davinci-003",
                 prompt=combined_prompt,
-                max_tokens=1000
+                max_tokens=1000,
+                temperature = 0
             )
             text = res["choices"][0]["text"]
 

@@ -1,18 +1,24 @@
 # install before import openai and dotenv
 # $pip install openai
 # $pip install dotenv
-import openai
-from dotenv import dotenv_values
 
-# read the file ".env" and get the API key
-openai.api_key = dotenv_values('.env')["API_KEY"]
+import openai
+from dotenv import find_dotenv, load_dotenv
+
+load_dotenv()
+
+client = openai.OpenAI()
+
 
 # set prompt with:
 # a)request
 # b)expecting format
 # c)example
 messages = [
-    {"role": "system", "content": "現在你是一位可以精準地將重點提煉出並整理成表格的助手"},
+    {
+        "role": "system",
+        "content": "現在你是一位可以精準地將重點提煉出並整理成表格的助手"
+    },
     {"role": "user", "content": """
 我希望將以下資料抽取部分欄位轉換成有主次關係的表格呈現結構化資料
 ===
@@ -86,11 +92,11 @@ Skin, nasal bridge, excisional biopsy --- Basal cell carcinoma
 ]
 
 # send repuest
-res = openai.ChatCompletion.create(
+res = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=messages,
         max_tokens = 1000
     )
 
 # print respond
-print (res.choices[0].message['content'])
+print (res.choices[0].message)

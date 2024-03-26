@@ -71,28 +71,65 @@ fixed_prompt = """
 # 登入首頁路由
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("login.html")
 
+# 錯誤頁面路由
+@app.route("/error")
+def error():
+    msg = request.args.get('msg')
+    return render_template("error.html", error_msg=msg)
+
+# 註冊頁面路由
+@app.route("/signup")
+def signup():
+    return render_template("signup.html")
 
 ############################################################################################################
 
-# # 處理登入 POST 請求
-# @app.route("/login", methods=["POST"])
-# def login_home():
-#     username = request.form["username"]
-#     password = request.form["password"]
+# 處理註冊表單請求
+@app.route('/register', methods=['POST'])
+def register():
+    # 從前端接受資料
+    username = request.form.get('username')
+    email = request.form.get('email')
+    password = request.form.get('password')
+    # 檢查 email 是否已經被註冊
+    collection = db.user
+    is_exist = collection.find_one({'email': email})
+    # 如果已經被註冊，導向錯誤頁面
+    # 如果沒有被註冊，將資料寫入資料庫，再導向登入頁面
+    if is_exist != None:
+        msg="此 Email 已經被註冊過"
+        return render_template("error.html", error_msg=msg)
+    else:
+        collection.insert_one({
+            'username': username,
+            'email': email,
+            'password': password
+        })
+        return redirect('/')
 
-#     # 檢查使用者是否存在於資料庫
-#     have_signup = db.users.find
-
-#     # 如果使用者存在，設置其為已登入並導向到 index
-#     if 'username' in session:
-#         return redirect("index.html")
-#     else:
-#         return render_template("error.html", error_msg="使用者名稱或密碼不正確")
-
-    # 如果使用者不存在或密碼不正確，顯示錯誤訊息
-
+# 處理登入表單請求
+@app.route('/login', methods=['POST'])
+def login():
+    # 從前端接受資料
+    email = request.form.get('email')
+    password = request.form.get('password')
+    # 檢查 email 和 password 是否正確
+    collection = db.user
+    is_correct = collection.find_one({
+        "$and": [
+            {'email': email},
+            {'password': password}
+        ]
+    })
+    # 如果不正確，導向錯誤頁面
+    # 如果正確，在session中記錄會員資訊，再導向會員頁面
+    if is_correct == None:
+        return redirect('/error?msg=帳號或密碼輸入錯誤')
+    else:
+        session['username'] = is_correct['username']
+        return redirect('/home')
 # @app.route('/instructions')
 # def show_instructions():
 #     # 在這裡可以加入返回使用說明的邏輯

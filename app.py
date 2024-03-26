@@ -71,7 +71,7 @@ fixed_prompt = """
 # 登入首頁路由
 @app.route("/")
 def index():
-    return render_template("login.html")
+    return render_template("index.html")
 
 # 錯誤頁面路由
 @app.route("/error")
@@ -83,6 +83,14 @@ def error():
 @app.route("/signup")
 def signup():
     return render_template("signup.html")
+
+# 主頁面路由
+@app.route("/home")
+def home():
+    if 'username' in session:
+        return render_template("home.html", username=session['username'])
+    else:
+        return redirect('/')
 
 ############################################################################################################
 

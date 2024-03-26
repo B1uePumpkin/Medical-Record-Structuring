@@ -1,51 +1,32 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, render_template, request, redirect, url_for, session
-from flask_mysqldb import MySQL
+from flask import *
 from dotenv import dotenv_values
-from flask import send_file
 from docx import Document
 import openai
+import pymongo
 
-app = Flask(__name__, template_folder='frontend')
-app.static_folder = 'frontend'
+app = Flask(
+    __name__,
+    static_folder = 'static',
+    template_folder = 'templates',
+    static_url_path='/static'
+    )
+
 
 # 從 .env 載入配置
 dotenv_config = dotenv_values(".env")
 
 # 設定 OpenAI API 金鑰
-api_key = dotenv_config.get('API_KEY')
-openai.api_key = api_key
+openai.api_key = dotenv_config.get('API_KEY')
 
-# MySQL 配置
-app.config['MYSQL_HOST'] = dotenv_config['MYSQL_HOST']
-app.config['MYSQL_USER'] = dotenv_config['MYSQL_USER']
-app.config['MYSQL_PASSWORD'] = dotenv_config['MYSQL_PASSWORD']
-app.config['MYSQL_DB'] = dotenv_config['MYSQL_DB']
+# 設定 MongoDB 連接
+mongo_client = pymongo.MongoClient(dotenv_config.get('MONGODB_URI'))
+print("Connected to MongoDB")
 
-# 初始化 MySQL
-mysql = MySQL(app)
+############################################################################################################
 
 # 預先定義的固定 prompt
 fixed_prompt = """
-<<<<<<< HEAD
-首先完整查看使用者輸入的病例內容，再來根據這些信息產生一份完整的病例表格，格式內容請參考下面輸出範例，沒有或空白的資料請填入"N/A"，請確保欄位和資料內容須正確相符、完整且必須對齊，表格結構需要正確，最後檢查內容無誤再以醫學原文或英文輸出，以下是輸出範例格式，注意不要跑版，並且要按照範例順序:  
-|SNOMED:| SNOMED |
-|病史:| CLINICAL HISTORY |
-|診斷:| DIAGNOSIS |
-|組織片數:| 片數 |
-|組織尺寸:| 1x1x1 cm | 
-|組織部位:| 組織或切片部位 |
-|切片方式:| Colonoscopy |  
-|處理方式:| fixed in formalin | 
-|組織顏色:| 組織切片顏色 |
-|組織形狀:| 組織切片形狀 |
-|顯微鏡檢查:| 顯微鏡檢查結果 |
-|參考資料:| 參考資料內容 |
-|住院醫師:| 醫師姓名 |
-|病理醫師:| 醫師姓名 |
-|細胞醫檢師:| 細胞醫檢師姓名 |
-|病理專醫字:| 病理專醫字 |
-=======
 首先完整查看使用者輸入的病例內容，再來根據這些信息產生一份完整的病例表格，格式內容請參考下面輸出範例，沒有或空白的資料請填入"N/A"，請確保欄位和資料內容須正確相符、完整且必須對齊，表格結構需要正確，最後檢查內容無誤再以原文或英文輸出
 以下是輸出範例格式:
 ===
@@ -82,9 +63,9 @@ fixed_prompt = """
 
 | 病理專醫字 | 醫師姓名 |
 ===
->>>>>>> main
 """
 
+############################################################################################################
 # 登入系統
 @app.route("/", methods=["GET", "POST"])
 def login():

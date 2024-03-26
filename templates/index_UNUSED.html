@@ -1,0 +1,78 @@
+<!-- frontend/templates/index.html -->
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>病歷結構化系統</title>
+</head>
+<body>
+    <div class="container">
+        <form id="submitForm" method='post'>
+            <h1 class="fw-bold">病歷結構化系統</h1>
+            <br>
+            <br>
+            <br>
+            <label for='prompt'>請輸入病歷：</label><br/>
+            <textarea name='prompt' rows='15' class='input-textarea'></textarea>
+            <br/>
+            <button type='submit' class='btn btn-primary submit-btn' id='submitBtn'>
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" id="spinner" style="display: none;"></span>
+                提交
+            </button>
+        </form>
+
+        <!-- 新增使用說明按鈕 -->
+        <div class='instructions-btn'>
+            <a href="{{ url_for('show_instructions') }}" class='btn btn-info'>使用說明</a> <!-- 將使用說明按鈕套用 Bootstrap 樣式 -->
+        </div>
+
+        {% if lines %}
+        <div class='result'>
+            <table class='table'> <!-- 將表格套用 Bootstrap 樣式 -->
+                {% for line in lines %}
+                    {% if '|' in line %}
+                        {% set columns = line.split('|') %}
+                        <tr>
+                            {% for col in columns %}
+                                <td>{{ col.strip() }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+            
+            <!-- 新增下載按鈕 -->
+            <div class='download-buttons'>
+                <a href="{{ url_for('download_txt') }}" class='btn btn-success'>下載病例表格 (txt)</a>
+                <a href="{{ url_for('download_word') }}" class='btn btn-warning'>下載病例表格 (docx)</a> <!-- 將下載按鈕套用 Bootstrap 樣式 -->
+            </div>
+
+            <!-- 新增登出按鈕 -->
+            <div id="logout-container">
+                <a href="{{ url_for('logout') }}" class='btn btn-danger'>登出</a> <!-- 將登出按鈕套用 Bootstrap 樣式 -->
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+<!-- frontend/templates/index.html -->
+
+<!-- ... 其他代碼 ... -->
+
+<script>
+    document.getElementById('submitForm').addEventListener('submit', function(event) {
+        document.getElementById('spinner').style.display = 'inline-block';
+        document.getElementById('submitBtn').disabled = true;
+
+        // 如果需要取消提交，可以取消以下行的註解
+        // event.preventDefault();
+
+        // 在這裡添加提交邏輯
+    });
+</script>
+</html>

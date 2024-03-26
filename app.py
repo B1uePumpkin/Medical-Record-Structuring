@@ -21,7 +21,8 @@ openai.api_key = dotenv_config.get('API_KEY')
 
 # 設定 MongoDB 連接
 mongo_client = pymongo.MongoClient(dotenv_config.get('MONGODB_URI'))
-print("Connected to MongoDB")
+db = mongo_client["medical_web"]
+print("成功連接至 MongoDB")
 
 ############################################################################################################
 
@@ -66,127 +67,104 @@ fixed_prompt = """
 """
 
 ############################################################################################################
-# 登入系統
-@app.route("/", methods=["GET", "POST"])
-def login():
-    if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
 
-        # 檢查使用者是否存在於資料庫
-        cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM users WHERE username = %s AND password = %s", (username, password))
-        user = cur.fetchone()
-        cur.close()
-
-        # 如果使用者存在，設置其為已登入
-        if user:
-            session['user'] = user
-            return redirect(url_for('index'))
-
-    return render_template("login.html")
-
-# 登入路由
-@app.route("/login", methods=["GET", "POST"])
-def login_home():
-    if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
-
-        # 檢查使用者是否存在於資料庫
-        cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM users WHERE username = %s AND password = %s", (username, password))
-        user = cur.fetchone()
-        cur.close()
-
-        # 如果使用者存在，設置其為已登入並導向到 index
-        if user:
-            session['user'] = user
-            return redirect(url_for('index'))
-
-        # 如果使用者不存在或密碼不正確，顯示錯誤訊息
-        error_message = "Invalid username or password. Please try again."
-        return render_template("login.html", error_message=error_message)
-
-    return render_template("login.html")
-
-@app.route('/instructions')
-def show_instructions():
-    # 在這裡可以加入返回使用說明的邏輯
-    return render_template('instructions.html')
-
-# Index 路由
-@app.route("/index", methods=["GET", "POST"])
+# 登入首頁路由
+@app.route("/")
 def index():
-    if 'user' in session:  #判斷是否有使用者已經登入
-        user = session['user']
-            #處理 POST 請求。當接收到 POST 請求時，從表單中取得使用者輸入的文字
-        if request.method == "POST":  
-            user_input = request.form["prompt"]
-            combined_prompt = fixed_prompt + user_input
+    return render_template("index.html")
 
-            # 使用 OpenAI API 生成結果
-            res = openai.Completion.create(
-                model="text-davinci-003",
-                prompt=combined_prompt,
-                max_tokens=1000,
-                temperature=0
-            )
-            text = res["choices"][0]["text"]
 
-            # 將文字轉換為 HTML
-            lines = text.split("\n")
-            lines = [line.strip() for line in lines]
+############################################################################################################
 
-             #將結果轉換為 HTML 格式，同時保存為純文字檔案
-            save_txt_path = "result.txt" 
-            with open(save_txt_path, "w", encoding="utf-8") as txt_file:
-                for line in lines:
-                    clean_line = line.replace("|", "")
-                    if clean_line.strip():
-                        txt_file.write(clean_line + "\n")
+# # 處理登入 POST 請求
+# @app.route("/login", methods=["POST"])
+# def login_home():
+#     username = request.form["username"]
+#     password = request.form["password"]
 
-            return render_template("index.html", lines=lines)  #將結果傳遞給模板並返回
+#     # 檢查使用者是否存在於資料庫
+#     have_signup = db.users.find
 
-        return render_template("index.html", user=user)
+#     # 如果使用者存在，設置其為已登入並導向到 index
+#     if 'username' in session:
+#         return redirect("index.html")
+#     else:
+#         return render_template("error.html", error_msg="使用者名稱或密碼不正確")
 
-    else:
-        return redirect(url_for('login'))
+    # 如果使用者不存在或密碼不正確，顯示錯誤訊息
 
-# 登出系統
-@app.route("/logout")
-def logout():
-    session.pop('user', None)
-    return redirect(url_for('login'))
+# @app.route('/instructions')
+# def show_instructions():
+#     # 在這裡可以加入返回使用說明的邏輯
+#     return render_template('instructions.html')
 
-@app.route("/download_txt", methods=["GET"])
-def download_txt():
-    # 檔案路徑
-    file_path = "result.txt"
+# # Index 路由
+# @app.route("/index", methods=["GET", "POST"])
+# def index():
+#     if 'user' in session:  #判斷是否有使用者已經登入
+#         user = session['user']
+#             #處理 POST 請求。當接收到 POST 請求時，從表單中取得使用者輸入的文字
+#         if request.method == "POST":  
+#             user_input = request.form["prompt"]
+#             combined_prompt = fixed_prompt + user_input
 
-    # 回傳檔案至使用者
-    return send_file(file_path, as_attachment=True, download_name="病例表格.txt")
+#             # 使用 OpenAI API 生成結果
+#             res = openai.Completion.create(
+#                 model="text-davinci-003",
+#                 prompt=combined_prompt,
+#                 max_tokens=1000,
+#                 temperature=0
+#             )
+#             text = res["choices"][0]["text"]
 
-# 新增路由用於處理下載 Word 文件請求
-@app.route("/download_word", methods=["GET"])
-def download_word():
-    # 檔案路徑
-    txt_file_path = "result.txt"
-    word_file_path = "result.docx"
+#             # 將文字轉換為 HTML
+#             lines = text.split("\n")
+#             lines = [line.strip() for line in lines]
 
-    # 讀取 txt 檔案內容
-    with open(txt_file_path, "r", encoding="utf-8") as txt_file:
-        txt_content = txt_file.read()
+#              #將結果轉換為 HTML 格式，同時保存為純文字檔案
+#             save_txt_path = "result.txt" 
+#             with open(save_txt_path, "w", encoding="utf-8") as txt_file:
+#                 for line in lines:
+#                     clean_line = line.replace("|", "")
+#                     if clean_line.strip():
+#                         txt_file.write(clean_line + "\n")
 
-    # 創建 Word 文件
-    doc = Document()
-    doc.add_paragraph(txt_content)
+#             return render_template("index.html", lines=lines)  #將結果傳遞給模板並返回
 
-    # 儲存 Word 文件
-    doc.save(word_file_path)
+#         return render_template("index.html", user=user)
 
-    # 回傳 Word 檔案至使用者
-    return send_file(word_file_path, as_attachment=True, download_name="病例表格.docx")
+#     else:
+#         return redirect(url_for('login'))
+
+
+# @app.route("/download_txt", methods=["GET"])
+# def download_txt():
+#     # 檔案路徑
+#     file_path = "result.txt"
+
+#     # 回傳檔案至使用者
+#     return send_file(file_path, as_attachment=True, download_name="病例表格.txt")
+
+# # 新增路由用於處理下載 Word 文件請求
+# @app.route("/download_word", methods=["GET"])
+# def download_word():
+#     # 檔案路徑
+#     txt_file_path = "result.txt"
+#     word_file_path = "result.docx"
+
+#     # 讀取 txt 檔案內容
+#     with open(txt_file_path, "r", encoding="utf-8") as txt_file:
+#         txt_content = txt_file.read()
+
+#     # 創建 Word 文件
+#     doc = Document()
+#     doc.add_paragraph(txt_content)
+
+#     # 儲存 Word 文件
+#     doc.save(word_file_path)
+
+#     # 回傳 Word 檔案至使用者
+#     return send_file(word_file_path, as_attachment=True, download_name="病例表格.docx")
 
 
 if __name__ == "__main__":

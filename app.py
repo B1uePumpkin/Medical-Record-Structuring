@@ -87,6 +87,7 @@ def signup():
 # 主頁面路由
 @app.route("/home")
 def home():
+    # 檢查 session 中是否有會員資訊，防止未登入的用戶進入會員頁面
     if 'username' in session:
         return render_template("home.html", username=session['username'])
     else:
@@ -101,13 +102,13 @@ def register():
     username = request.form.get('username')
     email = request.form.get('email')
     password = request.form.get('password')
-    # 檢查 email 是否已經被註冊
+    # 檢查 user 是否已經被註冊
     collection = db.user
-    is_exist = collection.find_one({'email': email})
+    is_exist = collection.find_one({'username': username})
     # 如果已經被註冊，導向錯誤頁面
     # 如果沒有被註冊，將資料寫入資料庫，再導向登入頁面
     if is_exist != None:
-        msg="此 Email 已經被註冊過"
+        msg="此 Email 已經註冊過"
         return render_template("error.html", error_msg=msg)
     else:
         collection.insert_one({
@@ -121,6 +122,7 @@ def register():
 @app.route('/login', methods=['POST'])
 def login():
     # 從前端接受資料
+    username = request.form.get('username')
     email = request.form.get('email')
     password = request.form.get('password')
     # 檢查 email 和 password 是否正確
@@ -138,6 +140,14 @@ def login():
     else:
         session['username'] = is_correct['username']
         return redirect('/home')
+    
+# 處理登出請求
+@app.route('/logout')
+def logout():
+    # 清除 session 中的會員資訊
+    session.pop('username', None)
+    return redirect('/')
+
 # @app.route('/instructions')
 # def show_instructions():
 #     # 在這裡可以加入返回使用說明的邏輯

@@ -1,16 +1,17 @@
-SNOMED: 59000-A-81403 
-病史: Bloody stool 
-診斷: Intestine, large, labeled as "Ascending colon", endoscopic biopsy --- Adenocarcinoma 
-組織片數: 5 
-組織尺寸: 0.5 x 0.2 x 0.2 cm 
-組織部位: Colon mucosa 
-切片方式: Endoscopic biopsy 
-處理方式: Fixed in formalin 
-組織顏色: Gray white 
-組織形狀: Elastic 
-顯微鏡檢查: Fragments of necrotic debris and colon mucosa with proliferation and infiltration of irregular hyperchromatic neoplastic glands arranged mainly in complicated tubulo-papillary fashion, a moderately differentiated adenocarcinoma. Remnants suggestive of a pre-existing adenoma are not seen. 
-參考資料: S04-05069 Gall bladder, cholecystectomy --- Acute gangrenous cholecystitis; S01-01737 Skin, nasal bridge, excisional biopsy --- Basal cell carcinoma 
-住院醫師: N/A 
-病理醫師: Shu-Han Huang, M.D./SWH 
-細胞醫檢師: N/A 
-病理專醫字: 病解專醫字第000477號 
+ 欄位  資料 
+ ---  --- 
+ 診斷資料號  N/A 
+ 病史  N/A 
+ 診斷結果  N/A 
+ 組織片數  N/A 
+ 組織尺寸  N/A 
+ 組織部位  N/A 
+ 切片方式  N/A 
+ 處理方式  N/A 
+ 組織顏色  N/A 
+ 組織形狀  N/A 
+ 顯微鏡檢查  N/A 
+ 參考資料  N/A 
+ 住院醫師  N/A 
+ 病理醫師  N/A 
+ 病理專醫字  N/A 

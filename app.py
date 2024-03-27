@@ -17,7 +17,7 @@ app = Flask(
 dotenv_config = dotenv_values(".env")
 
 # 設定 OpenAI API 金鑰
-openai.api_key = dotenv_config.get('API_KEY')
+openai.api_key = dotenv_config.get('OPENAI_API_KEY')
 
 # 設定 MongoDB 連接
 mongo_client = pymongo.MongoClient(dotenv_config.get('MONGODB_URI'))
@@ -92,6 +92,11 @@ def home():
         return render_template("home.html", username=session['username'])
     else:
         return redirect('/')
+    
+# 關於頁面路由
+@app.route('/instructions')
+def show_instructions():
+    return render_template('instructions.html')
 
 ############################################################################################################
 
@@ -148,78 +153,77 @@ def logout():
     session.pop('username', None)
     return redirect('/')
 
-# @app.route('/instructions')
-# def show_instructions():
-#     # 在這裡可以加入返回使用說明的邏輯
-#     return render_template('instructions.html')
+############################################################################################################
 
-# # Index 路由
-# @app.route("/index", methods=["GET", "POST"])
-# def index():
-#     if 'user' in session:  #判斷是否有使用者已經登入
-#         user = session['user']
-#             #處理 POST 請求。當接收到 POST 請求時，從表單中取得使用者輸入的文字
-#         if request.method == "POST":  
-#             user_input = request.form["prompt"]
-#             combined_prompt = fixed_prompt + user_input
+# 處理資料傳輸 POST 請求
+@app.route("/generate", methods=["POST"])
+def generate():
 
-#             # 使用 OpenAI API 生成結果
-#             res = openai.Completion.create(
-#                 model="text-davinci-003",
-#                 prompt=combined_prompt,
-#                 max_tokens=1000,
-#                 temperature=0
-#             )
-#             text = res["choices"][0]["text"]
+    # 結合固定 prompt 和使用者輸入的文字
+    user_input = request.form["prompt"]
+    combined_prompt = fixed_prompt + user_input
 
-#             # 將文字轉換為 HTML
-#             lines = text.split("\n")
-#             lines = [line.strip() for line in lines]
+    # 使用 OpenAI API 生成結果
+    res = openai.ChatCompletion.create(
+        model="gpt-4",
+        messages=[
+            {"role": "system", "content": "現在你是一位可以精準地將重點提煉出並整理成表格的助手"},
+            {"role": "user", "content": combined_prompt}
+        ],
+        max_tokens=1000,
+        temperature=0,
+        
+    )
 
-#              #將結果轉換為 HTML 格式，同時保存為純文字檔案
-#             save_txt_path = "result.txt" 
-#             with open(save_txt_path, "w", encoding="utf-8") as txt_file:
-#                 for line in lines:
-#                     clean_line = line.replace("|", "")
-#                     if clean_line.strip():
-#                         txt_file.write(clean_line + "\n")
+    # 提取助手的回應文本
+    print("Response from OpenAI API:", res)  # 打印 res 的內容
+    text = res["choices"][0]["message"]["content"]  # 修改這行以提取助手的回應文本
 
-#             return render_template("index.html", lines=lines)  #將結果傳遞給模板並返回
+    # 將文字轉換為 HTML
+    lines = text.split("\n")
+    lines = [line.strip() for line in lines]
 
-#         return render_template("index.html", user=user)
+    # 將結果轉換為 HTML 格式，同時保存為純文字檔案
+    save_txt_path = "result.txt"
+    with open(save_txt_path, "w", encoding="utf-8") as txt_file:
+        for line in lines:
+            clean_line = line.replace("|", "")
+            if clean_line.strip():
+                txt_file.write(clean_line + "\n")
 
-#     else:
-#         return redirect(url_for('login'))
+    # 返回結果
+    return render_template("home.html", lines=lines, combined_prompt=combined_prompt, text=text)
 
+############################################################################################################
 
-# @app.route("/download_txt", methods=["GET"])
-# def download_txt():
-#     # 檔案路徑
-#     file_path = "result.txt"
+@app.route("/download_txt", methods=["GET"])
+def download_txt():
+    # 檔案路徑
+    file_path = "result.txt"
 
-#     # 回傳檔案至使用者
-#     return send_file(file_path, as_attachment=True, download_name="病例表格.txt")
+    # 回傳檔案至使用者
+    return send_file(file_path, as_attachment=True, download_name="病例表格.txt")
 
-# # 新增路由用於處理下載 Word 文件請求
-# @app.route("/download_word", methods=["GET"])
-# def download_word():
-#     # 檔案路徑
-#     txt_file_path = "result.txt"
-#     word_file_path = "result.docx"
+# 新增路由用於處理下載 Word 文件請求
+@app.route("/download_word", methods=["GET"])
+def download_word():
+    # 檔案路徑
+    txt_file_path = "result.txt"
+    word_file_path = "result.docx"
 
-#     # 讀取 txt 檔案內容
-#     with open(txt_file_path, "r", encoding="utf-8") as txt_file:
-#         txt_content = txt_file.read()
+    # 讀取 txt 檔案內容
+    with open(txt_file_path, "r", encoding="utf-8") as txt_file:
+        txt_content = txt_file.read()
 
-#     # 創建 Word 文件
-#     doc = Document()
-#     doc.add_paragraph(txt_content)
+    # 創建 Word 文件
+    doc = Document()
+    doc.add_paragraph(txt_content)
 
-#     # 儲存 Word 文件
-#     doc.save(word_file_path)
+    # 儲存 Word 文件
+    doc.save(word_file_path)
 
-#     # 回傳 Word 檔案至使用者
-#     return send_file(word_file_path, as_attachment=True, download_name="病例表格.docx")
+    # 回傳 Word 檔案至使用者
+    return send_file(word_file_path, as_attachment=True, download_name="病例表格.docx")
 
 
 if __name__ == "__main__":

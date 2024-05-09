@@ -4,6 +4,7 @@
 
 ##操作說明
 1.請先安裝python
+<br>
 2.請輸入下列指令安裝套件:
 <br>
 pip install Flask

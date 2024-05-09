@@ -29,7 +29,7 @@
     {% if lines %}
         <div class='result'>
             <table class='table'> <!-- 將表格套用 Bootstrap 樣式 -->
-                {% for line in lines %}
+                {% for line in lines[2:] %}
                     {% if '|' in line %}
                         {% set columns = line.split('|') %}
                         <tr>
@@ -41,10 +41,11 @@
                 {% endfor %}
             </table>
             
-            <!-- 新增下載按鈕 -->
+            <!-- 新增下載按鈕並套用bootstrap樣式 -->
             <div class='download-buttons'>
-                <a href="download_txt" class='btn btn-success'>下載病例表格 (txt)</a>
-                <a href="/download_word" class='btn btn-warning'>下載病例表格 (docx)</a> <!-- 將下載按鈕套用 Bootstrap 樣式 -->
+                <a href="/download_txt" class='btn btn-success'>下載病例表格 (txt)</a>
+                <a href="/download_word" class='btn btn-warning'>下載病例表格 (docx)</a>
+                <!-- <a href="/save_to_mongoDB" method = "POST" class='btn btn-danger'>存至MongoDB資料庫</a> -->
             </div>
         </div>
         {% endif %}

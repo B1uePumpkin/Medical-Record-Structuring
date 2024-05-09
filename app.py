@@ -24,7 +24,7 @@ mongo_client = pymongo.MongoClient(dotenv_config.get('MONGODB_URI'))
 db = mongo_client["medical_web"]
 print("成功連接至 MongoDB")
 
-############################################################################################################
+################################################## Prompt設置 ##########################################################
 
 # 預先定義的固定 prompt
 fixed_prompt = """
@@ -66,7 +66,7 @@ fixed_prompt = """
 ===
 """
 
-############################################################################################################
+################################################## 頁面路由設定 ##########################################################
 
 # 登入首頁路由
 @app.route("/")
@@ -98,7 +98,7 @@ def home():
 def show_instructions():
     return render_template('instructions.html')
 
-############################################################################################################
+####################################################### 登入登出 #####################################################
 
 # 處理註冊表單請求
 @app.route('/register', methods=['POST'])
@@ -153,8 +153,7 @@ def logout():
     session.pop('username', None)
     return redirect('/')
 
-############################################################################################################
-
+################################################ 生成及處理資料 ############################################################
 # 處理資料傳輸 POST 請求
 @app.route("/generate", methods=["POST"])
 def generate():
@@ -177,10 +176,13 @@ def generate():
 
     # 提取助手的回應文本
     print("Response from OpenAI API:", res)  # 打印 res 的內容
-    text = res["choices"][0]["message"]["content"]  # 修改這行以提取助手的回應文本
+    response_content = res["choices"][0]["message"]["content"]  # 修改這行以提取助手的回應文本
 
-    # 將文字轉換為 HTML
-    lines = text.split("\n")
+    # 將回應儲存至 MongoDB
+    save_to_mongoDB(response_content)
+
+    # # 將文字轉換為 HTML
+    lines = response_content.split("\n")
     lines = [line.strip() for line in lines]
 
     # 將結果轉換為 HTML 格式，同時保存為純文字檔案
@@ -190,11 +192,13 @@ def generate():
             clean_line = line.replace("|", "")
             if clean_line.strip():
                 txt_file.write(clean_line + "\n")
+    
+    
 
     # 返回結果
-    return render_template("home.html", lines=lines, combined_prompt=combined_prompt, text=text)
+    return render_template("home.html", lines=lines, combined_prompt=combined_prompt, text=response_content)
 
-############################################################################################################
+########################################## 處理檔案下載功能 ##################################################################
 
 @app.route("/download_txt", methods=["GET"])
 def download_txt():
@@ -225,7 +229,26 @@ def download_word():
     # 回傳 Word 檔案至使用者
     return send_file(word_file_path, as_attachment=True, attachment_filename="病例表格.docx")
 
+############################################################################################################
+# 將OpenAI的回應儲存到MongoDB
+# @app.route("/save_to_mongoDB", methods=["POST"])
+def save_to_mongoDB(content):
+    content_dict = {}
+    lines = content.split('\n')
+    for line in lines[2:]:
+        if '|' in line:
+            parts = line.split('|')
+            if len(parts) > 2:
+                key = parts[1].strip()
+                value = parts[2].strip()
+                content_dict[key] = value
+    collection = db.responses
+    result = collection.insert_one(content_dict)
+    print("成功儲存至 MongoDB，ID:", result.inserted_id)
 
+
+
+################################### 結束 ######################################################################
 if __name__ == "__main__":
     app.secret_key = '000000'  # 設置用於會話加密的秘密金鑰
     app.run()

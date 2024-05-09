@@ -5,12 +5,17 @@
 ##操作說明
 1.請先安裝python
 2.請輸入下列指令安裝套件:
+<br>
 pip install Flask
 <br>
 pip install python-dotenv
+<br>
 pip install python-docx
+<br>
 pip install openai
+<br>
 python -m pip install "pymongo[srv]"
+<br>
 pip install openai==0.28
 
 ## 投影片

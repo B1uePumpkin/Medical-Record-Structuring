@@ -6,6 +6,7 @@
 1.請先安裝python
 2.請輸入下列指令安裝套件:
 pip install Flask
+<br>
 pip install python-dotenv
 pip install python-docx
 pip install openai

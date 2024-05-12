@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>控制面板</h2>
+    <div>歡迎來到控制面板, {{ username }}</div>
+
+    <hr/>
+    <!-- 搜尋資料庫 -->
+    <form id="submitForm" method="POST" action="/search">
+        <h1 class="fw-bold">搜尋資料庫</h1>
+        <br>
+        <br>
+        <br>
+        <label for='prompt'>請輸入病歷：</label><br/>
+        <textarea name='prompt' rows='15' class='input-textarea'></textarea>
+</body>
+</html>

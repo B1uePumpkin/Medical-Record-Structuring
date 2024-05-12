@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>確認資料</title>
+</head>
+<body>
+    <form method="post" action="/save_to_mongoDB">
+        <input type="hidden" name="data" value="{{ data }}">
+        <h1>請確認以下病歷資料</h1>
+        <div>{{ data }}</div>
+
+        <input type="submit" value="確認存儲">
+    </form>
+</body>
+</html>

@@ -32,37 +32,24 @@ fixed_prompt = """
 以下是輸出範例格式:
 ===
 
-| 欄位 | 資料 |  
+{
+  "診斷資料號": "資料號",
+  "病史": "病人病史",
+  "診斷結果": "診斷結果",
+  "組織片數": "片數",
+  "組織尺寸": "切片尺寸大小",
+  "組織部位": "組織部位或切片部位",
+  "切片方式": "組織獲得方法",
+  "處理方式": "組織處理方式",
+  "組織顏色": "顏色",
+  "組織形狀": "形狀",
+  "顯微鏡檢查": "顯微鏡檢查結果",
+  "參考資料": "參考資料內容",
+  "住院醫師": "醫師姓名",
+  "病理醫師": "醫師姓名",
+  "病理專醫字": "醫師姓名"
+}
 
-| 診斷資料號 | 資料號 |
-
-| 病史 | 病人病史 |
-
-| 診斷結果 | 診斷結果 |
-
-| 組織片數 | 片數 |
-
-| 組織尺寸 | 切片尺寸大小 | 
-
-| 組織部位 | 組織部位或切片部位 |
-
-| 切片方式 | 組織獲得方法 |  
-
-| 處理方式 | 組織處理方式 | 
-
-| 組織顏色 | 顏色 |
-
-| 組織形狀 | 形狀 |
-
-| 顯微鏡檢查 | 顯微鏡檢查結果 |
-
-| 參考資料 | 參考資料內容 |
-
-| 住院醫師 | 醫師姓名 |
-
-| 病理醫師 | 醫師姓名 |
-
-| 病理專醫字 | 醫師姓名 |
 ===
 """
 
@@ -154,7 +141,7 @@ def logout():
     return redirect('/')
 
 ################################################ 生成及處理資料 ############################################################
-# 處理資料傳輸 POST 請求
+# 處理API溝通 POST 請求
 @app.route("/generate", methods=["POST"])
 def generate():
 
@@ -174,29 +161,13 @@ def generate():
         
     )
 
+
     # 提取助手的回應文本
     print("Response from OpenAI API:", res)  # 打印 res 的內容
     response_content = res["choices"][0]["message"]["content"]  # 修改這行以提取助手的回應文本
 
-    # 將回應儲存至 MongoDB
-    save_to_mongoDB(response_content)
-
-    # # 將文字轉換為 HTML
-    lines = response_content.split("\n")
-    lines = [line.strip() for line in lines]
-
-    # 將結果轉換為 HTML 格式，同時保存為純文字檔案
-    save_txt_path = "result.txt"
-    with open(save_txt_path, "w", encoding="utf-8") as txt_file:
-        for line in lines:
-            clean_line = line.replace("|", "")
-            if clean_line.strip():
-                txt_file.write(clean_line + "\n")
-    
-    
-
     # 返回結果
-    return render_template("home.html", lines=lines, combined_prompt=combined_prompt, text=response_content)
+    return render_template("confirm.html", data =response_content, username=session['username'])
 
 ########################################## 處理檔案下載功能 ##################################################################
 
@@ -231,24 +202,28 @@ def download_word():
 
 ############################################################################################################
 # 將OpenAI的回應儲存到MongoDB
-# @app.route("/save_to_mongoDB", methods=["POST"])
-def save_to_mongoDB(content):
-    content_dict = {}
-    lines = content.split('\n')
-    for line in lines[2:]:
-        if '|' in line:
-            parts = line.split('|')
-            if len(parts) > 2:
-                key = parts[1].strip()
-                value = parts[2].strip()
-                content_dict[key] = value
+@app.route("/save_to_mongoDB", methods=["POST"])
+def save_to_mongoDB():
+    # 從表單數據中獲取數據
+    data = request.form.get('data')
+    print("接收到的數據:", data)
+
+    # 將接收到的字符串數據轉換成字典
+    import json
+    data_dict = json.loads(data)
+
+    # 存儲到MongoDB
     collection = db.responses
-    result = collection.insert_one(content_dict)
-    print("成功儲存至 MongoDB，ID:", result.inserted_id)
+    result = collection.insert_one(data_dict)
+    if result.acknowledged:
+        print("資料存儲成功" + str(result.inserted_id))
+        return redirect(url_for('home'))
+    else:
+        redirect(url_for('error?msg=資料存儲失敗'))
 
 
 
 ################################### 結束 ######################################################################
 if __name__ == "__main__":
     app.secret_key = '000000'  # 設置用於會話加密的秘密金鑰
-    app.run()
+    app.run(debug=True)

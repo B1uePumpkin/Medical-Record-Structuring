@@ -8,15 +8,21 @@
 <body>
     <h2>控制面板</h2>
     <div>歡迎來到控制面板, {{ username }}</div>
-
-    <hr/>
-    <!-- 搜尋資料庫 -->
-    <form id="submitForm" method="POST" action="/search">
-        <h1 class="fw-bold">搜尋資料庫</h1>
-        <br>
-        <br>
-        <br>
-        <label for='prompt'>請輸入病歷：</label><br/>
-        <textarea name='prompt' rows='15' class='input-textarea'></textarea>
+    <div>
+        <form method="GET" action = "/search">
+            <div>
+                <input type="checkbox" name="query_medical_history" id="query_medical_history">
+                <label for="medical_history">病史:</label>
+                <input type="text" name="medical_history" id="medical_history">
+            </div>
+            <button type="submit">提交</button>
+        </form>
+        <!-- 查詢結果 -->
+        {% if data %}
+        <div>
+            <p>{{ data }}</p>
+        </div>
+        {% endif %}
+    </div>
 </body>
 </html>

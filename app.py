@@ -85,6 +85,11 @@ def home():
 def show_instructions():
     return render_template('instructions.html')
 
+# 控制面板路由
+@app.route('/control_panel')
+def show_control_panel():
+    return render_template('control_panel.html')
+
 ####################################################### 登入登出 #####################################################
 
 # 處理註冊表單請求
@@ -200,7 +205,7 @@ def download_word():
     # 回傳 Word 檔案至使用者
     return send_file(word_file_path, as_attachment=True, attachment_filename="病例表格.docx")
 
-############################################################################################################
+######################################### 資料庫操作 ###################################################################
 # 將OpenAI的回應儲存到MongoDB
 @app.route("/save_to_mongoDB", methods=["POST"])
 def save_to_mongoDB():
@@ -221,7 +226,23 @@ def save_to_mongoDB():
     else:
         redirect(url_for('error?msg=資料存儲失敗'))
 
+# 從MongoDB中獲取OpenAI的回應
+@app.route("/search", methods=["GET"])
+def search():
+    # 獲取數據庫中的所有數據
+    medical_history = request.args.get('medical_history')
+    # 從MongoDB中查找數據
+    collection = db.responses
+    result = collection.find_one({
+        "病史": medical_history
+    })
+    print("查詢結果:", result)
 
+    # 如果查找到了數據，則返回結果
+    if result:
+        return render_template("control_panel.html", data=result)
+    else:
+        return redirect(url_for('error?msg=查無資料'))
 
 ################################### 結束 ######################################################################
 if __name__ == "__main__":

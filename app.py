@@ -273,7 +273,8 @@ def search():
     if result_list:
         return render_template("control_panel.html", query_fields=query_fields, data=result_list)
     else:
-        return redirect(url_for('error', msg='查無資料，請重新查詢或新增資料'))
+        msg = "沒有符合條件的資料"
+        return render_template("control_panel.html", query_fields=query_fields, msg=msg)
 
 
 ################################### 結束 ######################################################################

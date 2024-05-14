@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>控制面板</title>
 </head>
 <body>
     <h2>控制面板</h2>
@@ -18,11 +18,19 @@
             <button type="submit">提交</button>
         </form>
         <!-- 查詢結果 -->
-        {% if data %}
+    {% if data %}
+        {% for item in data %}
         <div>
-            <p>{{ data }}</p>
+            <p>Data ID: {{item['_id'] or 'No data'}}</p>
+            <p>病史: {{ item['病史'] or 'No data'}}</p>
+            <p>診斷資料號: {{ item['診斷資料號'] or 'No data'}}</p>
+            <!-- 可以添加其他字段的顯示 -->
+            &nbsp
         </div>
-        {% endif %}
+        {% endfor %}
+    {% else %}
+        <p>查無資料</p>
+    {% endif %}
     </div>
 </body>
 </html>

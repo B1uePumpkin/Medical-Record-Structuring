@@ -233,14 +233,15 @@ def search():
     medical_history = request.args.get('medical_history')
     # 從MongoDB中查找數據
     collection = db.responses
-    result = collection.find_one({
+    result = collection.find({
         "病史": medical_history
     })
-    print("查詢結果:", result)
+    result_list = list(result)
+    print("查詢結果:", result_list)
 
     # 如果查找到了數據，則返回結果
     if result:
-        return render_template("control_panel.html", data=result)
+        return render_template("control_panel.html", data=result_list)
     else:
         return redirect(url_for('error?msg=查無資料'))
 

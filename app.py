@@ -25,7 +25,24 @@ db = mongo_client["medical_web"]
 print("成功連接至 MongoDB")
 
 ################################################## Prompt設置 ##########################################################
-
+# query_fields
+query_fields = [
+    {'id': 'query_diagnosis_id', 'label': '診斷資料號', 'db_key': '診斷資料號'},
+    {'id': 'query_medical_history', 'label': '病史', 'db_key': '病史'},
+    {'id': 'query_diagnosis_result', 'label': '診斷結果', 'db_key': '診斷結果'},
+    {'id': 'query_tissue_count', 'label': '組織片數', 'db_key': '組織片數'},
+    {'id': 'query_tissue_size', 'label': '組織尺寸', 'db_key': '組織尺寸'},
+    {'id': 'query_tissue_location', 'label': '組織部位', 'db_key': '組織部位'},
+    {'id': 'query_biopsy_type', 'label': '切片方式', 'db_key': '切片方式'},
+    {'id': 'query_treatment_method', 'label': '處理方式', 'db_key': '處理方式'},
+    {'id': 'query_tissue_color', 'label': '組織顏色', 'db_key': '組織顏色'},
+    {'id': 'query_tissue_consistency', 'label': '組織形狀', 'db_key': '組織形狀'},
+    {'id': 'query_microscopic_examination', 'label': '顯微鏡檢查', 'db_key': '顯微鏡檢查'},
+    {'id': 'query_reference_data', 'label': '參考資料', 'db_key': '參考資料'},
+    {'id': 'query_attending_physician', 'label': '住院醫師', 'db_key': '住院醫師'},
+    {'id': 'query_pathologist', 'label': '病理醫師', 'db_key': '病理醫師'},
+    {'id': 'query_pathologist_license', 'label': '病理專醫字', 'db_key': '病理專醫字'}
+]
 # 預先定義的固定 prompt
 fixed_prompt = """
 首先完整查看使用者輸入的病例內容，再來根據這些信息產生一份完整的病例表格，格式內容請參考下面輸出範例，沒有或空白的資料請填入"N/A"，請確保欄位和資料內容須正確相符、完整且必須對齊，表格結構需要正確，最後檢查內容無誤再以原文或英文輸出
@@ -88,7 +105,8 @@ def show_instructions():
 # 控制面板路由
 @app.route('/control_panel')
 def show_control_panel():
-    return render_template('control_panel.html')
+    # 使用全局的query_fields
+    return render_template('control_panel.html', query_fields=query_fields, msg='')
 
 ####################################################### 登入登出 #####################################################
 
@@ -232,52 +250,30 @@ from flask import request, render_template, redirect, url_for
 @app.route("/search", methods=["POST"])
 def search():
     query_conditions = {}
-    # 從表單數據中獲取查詢條件
-    if 'use_query_id' in request.form and request.form['query_id']:
-        query_conditions["_id"] = request.form['query_id']
-    if 'use_query_diagnosis_id' in request.form and request.form['query_diagnosis_id']:
-        query_conditions["診斷資料號"] = request.form['query_diagnosis_id']
-    if 'use_query_medical_history' in request.form and request.form['query_medical_history']:
-        query_conditions["病史"] = request.form['query_medical_history']
-    if 'use_query_diagnosis_result' in request.form and request.form['query_diagnosis_result']:
-        query_conditions["診斷結果"] = request.form['query_diagnosis_result']
-    if 'use_query_tissue_count' in request.form and request.form['query_tissue_count']:
-        query_conditions["組織片數"] = request.form['query_tissue_count']
-    if 'use_query_tissue_size' in request.form and request.form['query_tissue_size']:
-        query_conditions["組織尺寸"] = request.form['query_tissue_size']
-    if 'use_query_tissue_location' in request.form and request.form['query_tissue_location']:
-        query_conditions["組織部位"] = request.form['query_tissue_location']
-    if 'use_query_biopsy_type' in request.form and request.form['query_biopsy_type']:
-        query_conditions["切片方式"] = request.form['query_biopsy_type']
-    if 'use_query_treatment_method' in request.form and request.form['query_treatment_method']:
-        query_conditions["處理方式"] = request.form['query_treatment_method']
-    if 'use_query_tissue_color' in request.form and request.form['query_tissue_color']:
-        query_conditions["組織顏色"] = request.form['query_tissue_color']
-    if 'use_query_tissue_consistency' in request.form and request.form['query_tissue_consistency']:
-        query_conditions["組織形狀"] = request.form['query_tissue_consistency']
-    if 'use_query_microscopic_examination' in request.form and request.form['query_microscopic_examination']:
-        query_conditions["顯微鏡檢查"] = request.form['query_microscopic_examination']
-    if 'use_query_reference_data' in request.form and request.form['query_reference_data']:
-        query_conditions["參考資料"] = request.form['query_reference_data']
-    if 'use_query_attending_physician' in request.form and request.form['query_attending_physician']:
-        query_conditions["住院醫師"] = request.form['query_attending_physician']
-    if 'use_query_pathologist' in request.form and request.form['query_pathologist']:
-        query_conditions["病理醫師"] = request.form['query_pathologist']
-    if 'use_query_pathologist_license' in request.form and request.form['query_pathologist_license']:
-        query_conditions["病理專醫字"] = request.form['query_pathologist_license']
+    # 使用全域的query_fields
+    for field in query_fields:
+        checkbox_field_id = 'use_' + field['id']
+        input_field_id = field['db_key']
+        if request.form.get(checkbox_field_id) == 'on' and request.form.get(input_field_id):
+            query_conditions[field['db_key']] = request.form[input_field_id]
 
+    if not query_conditions:
+        msg = "請至少選擇一個查詢條件"
+        return render_template("control_panel.html", query_fields=query_fields, msg=msg)
+    
     # 查詢MongoDB
     collection = db.responses
     results = collection.find(query_conditions)
-    result_list = list(results)
+    result_list = list(results) if results else []
     print("查詢條件:", query_conditions)
     print("查詢结果:", result_list)
 
+
     # 返回結果
     if result_list:
-        return render_template("control_panel.html", data=result_list)
+        return render_template("control_panel.html", query_fields=query_fields, data=result_list)
     else:
-        return redirect(url_for('error', msg='查无资料'))
+        return redirect(url_for('error', msg='查無資料，請重新查詢或新增資料'))
 
 
 ################################### 結束 ######################################################################

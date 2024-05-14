@@ -9,11 +9,88 @@
     <h2>控制面板</h2>
     <div>歡迎來到控制面板, {{ username }}</div>
     <div>
-        <form method="GET" action = "/search">
+        <form method="POST" action = "/search">
             <div>
-                <input type="checkbox" name="query_medical_history" id="query_medical_history">
-                <label for="medical_history">病史:</label>
-                <input type="text" name="medical_history" id="medical_history">
+                <input type="checkbox" name="use_query_id" id="use_query_id">
+                <label for="query_id">Data ID:</label>
+                <input type="text" name="query_id" id="query_id">
+                <br/>
+
+                <input type="checkbox" name="use_query_diagnosis_id" id="use_query_diagnosis_id">
+                <label for="query_diagnosis_id">診斷資料號:</label>
+                <input type="text" name="query_diagnosis_id" id="query_diagnosis_id">
+                <br/>
+
+                <input type="checkbox" name="use_query_medical_history" id="use_query_medical_history">
+                <label for="query_medical_history">病史:</label>
+                <input type="text" name="query_medical_history" id="query_medical_history">
+                <br/>
+
+                <input type="checkbox" name="use_query_diagnosis_result" id="use_query_diagnosis_result">
+                <label for="query_diagnosis_result">診斷結果:</label>
+                <input type="text" name="query_diagnosis_result" id="query_diagnosis_result">
+                <br/>
+
+                <input type="checkbox" name="use_query_tissue_count" id="use_query_tissue_count">
+                <label for="query_tissue_count">組織片數:</label>
+                <input type="text" name="query_tissue_count" id="query_tissue_count">
+                <br/>
+
+                <input type="checkbox" name="use_query_tissue_size" id="use_query_tissue_size">
+                <label for="query_tissue_size">組織尺寸:</label>
+                <input type="text" name="query_tissue_size" id="query_tissue_size">
+                <br/>
+
+                <input type="checkbox" name="use_query_tissue_location" id="use_query_tissue_location">
+                <label for="query_tissue_location">組織部位:</label>
+                <input type="text" name="query_tissue_location" id="query_tissue_location">
+                <br/>
+
+                <input type="checkbox" name="use_query_biopsy_type" id="use_query_biopsy_type">
+                <label for="query_biopsy_type">切片方式:</label>
+                <input type="text" name="query_biopsy_type" id="query_biopsy_type">
+                <br/>
+
+                <input type="checkbox" name="use_query_treatment_method" id="use_query_treatment_method">
+                <label for="query_treatment_method">處理方式:</label>
+                <input type="text" name="query_treatment_method" id="query_treatment_method">
+                <br/>
+
+                <input type="checkbox" name="use_query_tissue_color" id="use_query_tissue_color">
+                <label for="query_tissue_color">組織顏色:</label>
+                <input type="text" name="query_tissue_color" id="query_tissue_color">
+                <br/>
+
+                <input type="checkbox" name="use_query_tissue_consistency" id="use_query_tissue_consistency">
+                <label for="query_tissue_consistency">組織形狀:</label>
+                <input type="text" name="query_tissue_consistency" id="query_tissue_consistency">
+                <br/>
+
+                <input type="checkbox" name="use_query_microscopic_examination" id="use_query_microscopic_examination">
+                <label for="query_microscopic_examination">顯微鏡檢查:</label>
+                <input type="text" name="query_microscopic_examination" id="query_microscopic_examination">
+                <br/>
+
+                <input type="checkbox" name="use_query_reference_data" id="use_query_reference_data">
+                <label for="query_reference_data">參考資料:</label>
+                <input type="text" name="query_reference_data" id="query_reference_data">
+                <br/>
+
+                <input type="checkbox" name="use_query_attending_physician" id="use_query_attending_physician">
+                <label for="query_attending_physician">住院醫師:</label>
+                <input type="text" name="query_attending_physician" id="query_attending_physician">
+                <br/>
+
+                <input type="checkbox" name="use_query_pathologist" id="use_query_pathologist">
+                <label for="query_pathologist">病理醫師:</label>
+                <input type="text" name="query_pathologist" id="query_pathologist">
+                <br/>
+
+                <input type="checkbox" name="use_query_pathologist_license" id="use_query_pathologist_license">
+                <label for="query_pathologist_license">病理專醫字:</label>
+                <input type="text" name="query_pathologist_license" id="query_pathologist_license">
+                <br/>
+
             </div>
             <button type="submit">提交</button>
         </form>
@@ -28,8 +105,6 @@
             &nbsp
         </div>
         {% endfor %}
-    {% else %}
-        <p>查無資料</p>
     {% endif %}
     </div>
 </body>

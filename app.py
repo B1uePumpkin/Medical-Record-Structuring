@@ -227,23 +227,58 @@ def save_to_mongoDB():
         redirect(url_for('error?msg=資料存儲失敗'))
 
 # 從MongoDB中獲取OpenAI的回應
-@app.route("/search", methods=["GET"])
-def search():
-    # 獲取數據庫中的所有數據
-    medical_history = request.args.get('medical_history')
-    # 從MongoDB中查找數據
-    collection = db.responses
-    result = collection.find({
-        "病史": medical_history
-    })
-    result_list = list(result)
-    print("查詢結果:", result_list)
+from flask import request, render_template, redirect, url_for
 
-    # 如果查找到了數據，則返回結果
-    if result:
+@app.route("/search", methods=["POST"])
+def search():
+    query_conditions = {}
+    # 從表單數據中獲取查詢條件
+    if 'use_query_id' in request.form and request.form['query_id']:
+        query_conditions["_id"] = request.form['query_id']
+    if 'use_query_diagnosis_id' in request.form and request.form['query_diagnosis_id']:
+        query_conditions["診斷資料號"] = request.form['query_diagnosis_id']
+    if 'use_query_medical_history' in request.form and request.form['query_medical_history']:
+        query_conditions["病史"] = request.form['query_medical_history']
+    if 'use_query_diagnosis_result' in request.form and request.form['query_diagnosis_result']:
+        query_conditions["診斷結果"] = request.form['query_diagnosis_result']
+    if 'use_query_tissue_count' in request.form and request.form['query_tissue_count']:
+        query_conditions["組織片數"] = request.form['query_tissue_count']
+    if 'use_query_tissue_size' in request.form and request.form['query_tissue_size']:
+        query_conditions["組織尺寸"] = request.form['query_tissue_size']
+    if 'use_query_tissue_location' in request.form and request.form['query_tissue_location']:
+        query_conditions["組織部位"] = request.form['query_tissue_location']
+    if 'use_query_biopsy_type' in request.form and request.form['query_biopsy_type']:
+        query_conditions["切片方式"] = request.form['query_biopsy_type']
+    if 'use_query_treatment_method' in request.form and request.form['query_treatment_method']:
+        query_conditions["處理方式"] = request.form['query_treatment_method']
+    if 'use_query_tissue_color' in request.form and request.form['query_tissue_color']:
+        query_conditions["組織顏色"] = request.form['query_tissue_color']
+    if 'use_query_tissue_consistency' in request.form and request.form['query_tissue_consistency']:
+        query_conditions["組織形狀"] = request.form['query_tissue_consistency']
+    if 'use_query_microscopic_examination' in request.form and request.form['query_microscopic_examination']:
+        query_conditions["顯微鏡檢查"] = request.form['query_microscopic_examination']
+    if 'use_query_reference_data' in request.form and request.form['query_reference_data']:
+        query_conditions["參考資料"] = request.form['query_reference_data']
+    if 'use_query_attending_physician' in request.form and request.form['query_attending_physician']:
+        query_conditions["住院醫師"] = request.form['query_attending_physician']
+    if 'use_query_pathologist' in request.form and request.form['query_pathologist']:
+        query_conditions["病理醫師"] = request.form['query_pathologist']
+    if 'use_query_pathologist_license' in request.form and request.form['query_pathologist_license']:
+        query_conditions["病理專醫字"] = request.form['query_pathologist_license']
+
+    # 查詢MongoDB
+    collection = db.responses
+    results = collection.find(query_conditions)
+    result_list = list(results)
+    print("查詢條件:", query_conditions)
+    print("查詢结果:", result_list)
+
+    # 返回結果
+    if result_list:
         return render_template("control_panel.html", data=result_list)
     else:
-        return redirect(url_for('error?msg=查無資料'))
+        return redirect(url_for('error', msg='查无资料'))
+
 
 ################################### 結束 ######################################################################
 if __name__ == "__main__":

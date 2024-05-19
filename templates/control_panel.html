@@ -31,15 +31,24 @@
       <h3>查詢結果</h3>
       {% for item in data %}
       <div>
-        <form method="POST" action="/delete">
-          <!-- 可將詳細資料展開查看 -->
-          <p>Data ID: {{item['_id'] or 'No data'}}</p>
-          <p>病史: {{ item['病史'] or 'No data'}}</p>
-          <p>診斷資料號: {{ item['診斷資料號'] or 'No data'}}</p>
-          <!-- 可以添加其他字段的顯示 -->
-          <button type="submit" name="data_id" value="{{ item['_id'] }}">
-            刪除
-          </button>
+        <form method="POST" action="/update_or_delete">
+          <p>Data ID: {{ item['_id'] or 'No data' }}</p>
+          <label for="病史">病史:</label>
+          <input
+            type="text"
+            name="病史"
+            value="{{ item['病史'] or 'No data' }}"
+          />
+          <label for="診斷資料號">診斷資料號:</label>
+          <input
+            type="text"
+            name="診斷資料號"
+            value="{{ item['診斷資料號'] or 'No data' }}"
+          />
+
+          <input type="hidden" name="data_id" value="{{ item['_id'] }}" />
+          <button type="submit" name="action" value="update">更新</button>
+          <button type="submit" name="action" value="delete">刪除</button>
         </form>
       </div>
       {% endfor %} {% else %}

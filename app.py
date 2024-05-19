@@ -297,6 +297,56 @@ def delete():
         print(msg)
         redirect(url_for('home', alert=msg))
 
+# 更新MongoDB中的OpenAI回應
+@app.route("/update_or_delete", methods=["POST"])
+def update_or_delete():
+    data_id = request.form.get('data_id')
+    action = request.form.get('action')
+    
+    if action == 'update':
+        病史 = request.form.get('病史')
+        診斷資料號 = request.form.get('診斷資料號')
+        print(f"更新資料的ID: {data_id}")
+        print(f"更新的病史: {病史}")
+        print(f"更新的診斷資料號: {診斷資料號}")
+        
+        # 將接收到的字串轉換成字典
+        data_dict = {
+            "病史": 病史,
+            "診斷資料號": 診斷資料號
+        }
+
+        # 更新MongoDB中的數據
+        collection = db.responses
+        result = collection.update_one({'_id': ObjectId(data_id)}, {'$set': data_dict})
+        if result.modified_count > 0:
+            msg = "資料更新成功"
+            print(msg)
+            return redirect(url_for('home', alert=msg))
+        else:
+            msg = "資料更新失敗"
+            print(msg)
+            return redirect(url_for('home', alert=msg))
+    elif action == 'delete':
+        print(f"刪除資料的ID: {data_id}")
+        
+        # 刪除MongoDB中的數據
+        collection = db.responses
+        result = collection.delete_one({'_id': ObjectId(data_id)})
+        if result.deleted_count > 0:
+            msg = "資料刪除成功"
+            print(msg)
+            return redirect(url_for('home', alert=msg))
+        else:
+            msg = "資料刪除失敗"
+            print(msg)
+            return redirect(url_for('home', alert=msg))
+    else:
+        msg = "無效的操作"
+        print(msg)
+        return redirect(url_for('home', alert=msg))
+
+
 ################################### 結束 ######################################################################
 if __name__ == "__main__":
     app.secret_key = '000000'  # 設置用於會話加密的秘密金鑰

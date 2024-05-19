@@ -4,6 +4,8 @@ from dotenv import dotenv_values
 from docx import Document
 import openai
 import pymongo
+from bson.objectid import ObjectId
+
 
 app = Flask(
     __name__,
@@ -240,9 +242,9 @@ def save_to_mongoDB():
     result = collection.insert_one(data_dict)
     if result.acknowledged:
         print("資料存儲成功" + str(result.inserted_id))
-        return redirect(url_for('home'))
+        return redirect(url_for('home', alert="資料存儲成功"))
     else:
-        redirect(url_for('error?msg=資料存儲失敗'))
+        return redirect(url_for('home', alert="資料存儲失敗"))
 
 # 從MongoDB中獲取OpenAI的回應
 from flask import request, render_template, redirect, url_for
@@ -276,6 +278,24 @@ def search():
         msg = "沒有符合條件的資料"
         return render_template("control_panel.html", query_fields=query_fields, msg=msg)
 
+# 刪除MongoDB中的OpenAI回應
+@app.route("/delete", methods=["POST"])
+def delete():
+    # 從表單數據中獲取數據
+    data_id = request.form.get('data_id')
+    print(f"刪除的資料ID:{data_id}")
+
+    # 刪除MongoDB中的數據
+    collection = db.responses
+    result = collection.delete_one({'_id': ObjectId(data_id)})
+    if result.deleted_count > 0:
+        msg="資料刪除成功"
+        print(msg)
+        return redirect(url_for('home', alert=msg))
+    else:
+        msg="資料刪除失敗"
+        print(msg)
+        redirect(url_for('home', alert=msg))
 
 ################################### 結束 ######################################################################
 if __name__ == "__main__":

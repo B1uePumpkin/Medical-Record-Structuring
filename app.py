@@ -190,6 +190,9 @@ def generate():
     # 提取助手的回應文本
     print("Response from OpenAI API:", res)  # 打印 res 的內容
     response_content = res["choices"][0]["message"]["content"]  # 修改這行以提取助手的回應文本
+    # 將回應文本轉為字典
+    response_content = eval(response_content)
+
 
     # 返回結果
     return render_template("confirm.html", data =response_content, username=session['username'])
@@ -233,13 +236,9 @@ def save_to_mongoDB():
     data = request.form.get('data')
     print("接收到的數據:", data)
 
-    # 將接收到的字符串數據轉換成字典
-    import json
-    data_dict = json.loads(data)
-
     # 存儲到MongoDB
     collection = db.responses
-    result = collection.insert_one(data_dict)
+    result = collection.insert_one(data)
     if result.acknowledged:
         print("資料存儲成功" + str(result.inserted_id))
         return redirect(url_for('home', alert="資料存儲成功"))

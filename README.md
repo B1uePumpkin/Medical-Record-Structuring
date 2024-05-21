@@ -4,7 +4,7 @@ FJCU MIIA 專題製作 by 410570152 戴昱豪 / 410570279 林奕寬 / 410570396 
 ## 操作說明
 
 1. 請先安裝Python
-2. 請輸入下列指令安裝套件:<br/>
+2. 請於cmd（命令提示字元）輸入下列指令安裝套件:<br/>
 - `pip install Flask`
 - `pip install python-dotenv`
 - `pip install python-docx`

@@ -5,6 +5,7 @@ from docx import Document
 import openai
 import pymongo
 from bson.objectid import ObjectId
+import ast
 
 
 app = Flask(
@@ -235,15 +236,20 @@ def save_to_mongoDB():
     # 從表單數據中獲取數據
     data = request.form.get('data')
     print("接收到的數據:", data)
+    print("數據類型:", type(data))
+
+    # 將接收到的字串轉換成字典
+    data_dict = ast.literal_eval(data)
+    print("轉換後的數據類型:", type(data_dict))
 
     # 存儲到MongoDB
     collection = db.responses
-    result = collection.insert_one(data)
+    result = collection.insert_one(data_dict)
     if result.acknowledged:
         print("資料存儲成功" + str(result.inserted_id))
-        return redirect(url_for('home', alert="資料存儲成功"))
+        return redirect(url_for('home', msg="資料存儲成功"))
     else:
-        return redirect(url_for('home', alert="資料存儲失敗"))
+        return redirect(url_for('home', msg="資料存儲失敗"))
 
 # 從MongoDB中獲取OpenAI的回應
 from flask import request, render_template, redirect, url_for

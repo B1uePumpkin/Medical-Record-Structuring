@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>控制面板</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='control_panel.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>控制面板</h2>
+        <div class="welcome">歡迎來到控制面板, {{ username }}</div>
+        <div class="form-container">
+            <form method="POST" action="/search">
+                {% for field in query_fields %}
+                <div class="form-group">
+                    <input type="checkbox" name="use_{{ field.id }}" id="use_{{ field.id }}" onchange="toggleInput(this)">
+                    <label for="{{ field.id }}">{{ field.label }}:</label>
+                    <input type="text" name="{{ field.db_key }}" id="{{ field.id }}" disabled>
+                </div>
+                {% endfor %}
+                <div class="button-wrapper">
+                    <button type="submit">提交</button>
+                </div>
+            </form>
+        </div>
+        <!-- 查詢結果 -->
+        <div class="result-container">
+            {% if data %}
+            <h3>查詢結果</h3>
+            {% for item in data %}
+            <div class="result-item">
+                <form method="POST" action="/update_or_delete">
+                    <p>Data ID: {{ item['_id'] or 'No data' }}</p>
+                    <div class="form-group">
+                        <label for="病史">病史:</label>
+                        <input type="text" name="病史" value="{{ item['病史'] or 'No data' }}" />
+                    </div>
+                    <div class="form-group">
+                        <label for="診斷資料號">診斷資料號:</label>
+                        <input type="text" name="診斷資料號" value="{{ item['診斷資料號'] or 'No data' }}" />
+                    </div>
+                    <input type="hidden" name="data_id" value="{{ item['_id'] }}" />
+                    <div class="button-group">
+                        <button type="submit" name="action" value="update">更新</button>
+                        <button type="submit" name="action" value="delete">刪除</button>
+                    </div>
+                </form>
+            </div>
+            {% endfor %} 
+            {% else %}
+            <p>{{ msg }}</p>
+            {% endif %}
+        </div>
+    </div>
+    <script>
+        function toggleInput(checkbox) {
+            const input = checkbox.parentElement.querySelector('input[type="text"]');
+            input.disabled = !checkbox.checked;
+        }
+    </script>
+</body>
+</html>

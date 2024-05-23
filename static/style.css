@@ -1,0 +1,123 @@
+/* 全局樣式設定 */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5; /* 背景顏色 */
+}
+
+h2, h1 {
+    color: #007bff; /* 自定義標題顏色 */
+}
+
+label {
+    font-size: 18px; /* 調整字體大小 */
+    color: #000;
+    display: block;
+    margin: 5px 0;
+}
+
+/* 輸入文本區樣式 */
+textarea {
+    width: 100%;
+    height: 300px;
+    font-size: 16px;
+    padding: 15px; /* 調整內部填充 */
+    border: 2px solid #ccc; /* 變更為粗線邊框 */
+    border-radius: 4px; /* 加入圓角 */
+    resize: none; /* 禁用調整大小 */
+}
+
+/* 提交按鈕樣式 */
+button {
+    display: block;
+    text-align: center;
+    padding: 10px 20px; /* 調整按鈕大小 */
+    font-size: 16px; /* 調整字體大小 */
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* 使用說明按鈕樣式 */
+.download-buttons {
+    display: flex;
+    justify-content: center; /* 將按鈕置於中心 */
+    margin-top: 20px;
+}
+
+.download-buttons a {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-bottom: 0px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.download-buttons a:hover {
+    background-color: #0056b3;
+}
+
+/* 登出按鈕樣式 */
+.text-center a {
+    display: inline-block;
+    padding: 10px;
+    margin-top: 30px;
+    background-color: #dc3545;
+    color: #fff;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.text-center a:hover {
+    background-color: #c82333;
+}
+
+.result {
+    margin-top: 40px; /* 調整表格與按鈕之間的距離 */
+}
+
+.result table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.result th, .result td {
+    border: 1px solid #ddd;
+    padding: 15px; /* 調整內部填充 */
+}
+
+.result th {
+    background-color: #f2f2f2;
+}
+
+/* 下載按鈕樣式 */
+.download-buttons {
+    display: flex;
+    justify-content: center; /* 將按鈕置於中心 */
+    margin-top: 20px;
+}
+
+.download-buttons a {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-bottom: 0px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.download-buttons a:hover {
+    background-color: #0056b3;
+}

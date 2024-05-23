@@ -1,0 +1,57 @@
+/* frontend/static/instruction.css */
+
+/* 這裡保留您原有的樣式，不需修改 */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e9ecef; /* 背景顏色 */
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #ffffff; /* 白色容器 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #007bff; /* 藍色標題 */
+}
+
+h3 {
+    color: #555;
+}
+
+ol {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+li {
+    margin-bottom: 30px;
+}
+
+ol {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 20px; /* 調整字體大小 */
+}
+
+
+.btn {
+    display: inline-block;
+    padding: 12px 20px;
+    margin-top: 20px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* 藍色按鈕懸停時的顏色 */
+}

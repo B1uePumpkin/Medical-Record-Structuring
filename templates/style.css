@@ -1,0 +1,104 @@
+/* frontend/static/style.css */
+
+/* 全局樣式設定 */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5e4b7; /* 背景顏色 */
+}
+
+.container label {
+    font-size: 30px; /* 調整字體大小 */
+    color: #110e0e;
+    display: block;
+    margin: 5px 0;
+}
+
+/* 頁面容器樣式 */
+.container {
+    max-width: 1000px;
+    margin: 20px auto 60px auto; /* 調整上方邊距 */
+    padding: 30px;
+    background-color: #ffffff; /* 白色容器 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+/* 頁面標題樣式 */
+.title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.container h1 {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #007bff; /* 自定義標題顏色 */
+}
+
+/* 輸入文本區樣式 */
+.input-textarea {
+    width: calc(100% - 30px); /* 調整為更寬的寬度 */
+    height: 500px;
+    font-size: 16px;
+    margin: 0 auto 20px auto; /* 置中，並調整上下邊距 */
+    padding: 15px; /* 調整內部填充 */
+    border: 2px solid #ccc; /* 變更為粗線邊框 */
+    border-radius: 4px; /* 加入圓角 */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 提交按鈕樣式 */
+.submit-btn {
+    box-sizing: border-box;
+    display: block;
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 10px 20px; /* 調整按鈕大小 */
+    font-size: 16px; /* 調整字體大小 */
+}
+
+/* 使用說明按鈕樣式 */
+.instructions-btn {
+    display: flex;
+    justify-content: flex-end; /* 將按鈕置於右側 */
+    margin-top: 50px;
+}
+
+.instructions-btn a {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-bottom: 0px;
+}
+
+/* 登出按鈕樣式 */
+#logout-container a {
+    display: inline-block;
+    padding: 10px;
+    margin-top: 30px;
+}
+
+/* 輸出結果樣式 */
+.result {
+    margin-top: 40px; /* 調整表格與按鈕之間的距離 */
+}
+
+.result table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.result th, .result td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 15px; /* 調整內部填充 */
+}
+
+.result th {
+    background-color: #f2f2f2;
+}

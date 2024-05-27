@@ -211,7 +211,7 @@ def download_txt():
     file_path = "result.txt"
 
     # 回傳檔案至使用者
-    return send_file(file_path, as_attachment=True, attachment_filename="病例表格.txt")
+    return send_file(file_path, as_attachment=True)
 
 # 新增路由用於處理下載 Word 文件請求
 @app.route("/download_word", methods=["GET"])
@@ -232,7 +232,7 @@ def download_word():
     doc.save(word_file_path)
 
     # 回傳 Word 檔案至使用者
-    return send_file(word_file_path, as_attachment=True, attachment_filename="病例表格.docx")
+    return send_file(word_file_path, as_attachment=True)
 
 ######################################### 資料庫操作 ###################################################################
 # 將OpenAI的回應儲存到MongoDB

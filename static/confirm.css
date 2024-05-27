@@ -38,25 +38,34 @@ th {
     background-color: #f2f2f2;
 }
 
-input[type="submit"],
-.btn {
+.confirm-btn {
     display: inline-block;
     padding: 8px 16px;
     border: none;
-    background-color: #007bff;
+    background-color: #189e45; /* 確認存儲按鈕的顏色 */
     color: #fff;
     text-decoration: none;
     cursor: pointer;
-    border-radius: 20px; /* 更弧狀 */
+    border-radius: 5px; /* 設置按鈕邊角為圓弧 */
     transition: background-color 0.3s ease;
 }
 
-input[type="submit"]:hover,
-.btn:hover {
-    background-color: #0056b3;
+.confirm-btn:hover {
+    background-color: #007bff; /* 滑鼠懸停時的顏色 */
 }
 
-/* 較小的按鈕 */
-.btn-small {
-    padding: 6px 12px;
+.download-btn {
+    display: inline-block;
+    padding: 8px 16px;
+    border: none;
+    background-color: #007bff; /* 下載按鈕的顏色 */
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 5px; /* 設置按鈕邊角為圓弧 */
+    transition: background-color 0.3s ease;
+}
+
+.download-btn:hover {
+    background-color: #189e45; /* 滑鼠懸停時的顏色 */
 }

@@ -6,6 +6,10 @@ import openai
 import pymongo
 from bson.objectid import ObjectId
 import ast
+from flask import Flask, render_template_string
+import matplotlib.pyplot as plt
+import io
+import base64
 
 
 app = Flask(
@@ -84,7 +88,7 @@ def index():
 @app.route("/error")
 def error():
     msg = request.args.get('msg')
-    return render_template("error.html", error_msg=msg)
+    return render_template("error.html", msg=msg)
 
 # 註冊頁面路由
 @app.route("/signup")
@@ -127,7 +131,7 @@ def register():
     # 如果沒有被註冊，將資料寫入資料庫，再導向登入頁面
     if is_exist != None:
         msg="此 Email 已經註冊過"
-        return render_template("error.html", error_msg=msg)
+        return render_template("error.html", msg=msg)
     else:
         collection.insert_one({
             'username': username,
@@ -291,18 +295,7 @@ def delete():
     data_id = request.form.get('data_id')
     print(f"刪除的資料ID:{data_id}")
 
-    # 刪除MongoDB中的數據
-    collection = db.responses
-    result = collection.delete_one({'_id': ObjectId(data_id)})
-    if result.deleted_count > 0:
-        msg="資料刪除成功"
-        print(msg)
-        return redirect(url_for('home', alert=msg))
-    else:
-        msg="資料刪除失敗"
-        print(msg)
-        redirect(url_for('home', alert=msg))
-
+# 刪除MongoDB中的數據
 # 更新MongoDB中的OpenAI回應
 @app.route("/update_or_delete", methods=["POST"])
 def update_or_delete():
@@ -328,11 +321,11 @@ def update_or_delete():
         if result.modified_count > 0:
             msg = "資料更新成功"
             print(msg)
-            return redirect(url_for('home', alert=msg))
+            return render_template("control_panel.html", msg=msg)
         else:
             msg = "資料更新失敗"
             print(msg)
-            return redirect(url_for('home', alert=msg))
+            return render_template("control_panel.html", msg=msg)
     elif action == 'delete':
         print(f"刪除資料的ID: {data_id}")
         
@@ -342,16 +335,34 @@ def update_or_delete():
         if result.deleted_count > 0:
             msg = "資料刪除成功"
             print(msg)
-            return redirect(url_for('home', alert=msg))
+            return render_template("control_panel.html", msg=msg)
         else:
             msg = "資料刪除失敗"
             print(msg)
-            return redirect(url_for('home', alert=msg))
+            return render_template("control_panel.html", msg=msg)
     else:
         msg = "無效的操作"
         print(msg)
-        return redirect(url_for('home', alert=msg))
+        return render_template("control_panel.html", msg=msg)
 
+################################## 畫圖功能 ######################################################################
+# 畫圖功能
+@app.route('/plot')
+def plot():
+    # 繪製圖表
+    plt.plot([1, 2, 3], [4, 5, 6])
+    plt.title('Sample Plot')
+
+    # 將圖儲存到 BytesIO
+    buffer = io.BytesIO()
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
+
+    # 將圖轉換為 Base64 字串
+    img_str = base64.b64encode(buffer.read()).decode('utf-8')
+
+    html = f'<img src="data:image/png;base64,{img_str}" alt="Sample Plot">'
+    return render_template_string(html)
 
 ################################### 結束 ######################################################################
 if __name__ == "__main__":

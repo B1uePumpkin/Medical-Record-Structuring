@@ -11,35 +11,34 @@
 </head>
 <body>
     <div class="container mt-5">
-        <h2 class="text-center">主頁面</h2>
-        <div class="text-center">歡迎來到主頁面, {{ username }}</div>
-        <hr />
-        <!-- page tab button -->
-        <div class="d-flex justify-content-center my-4">
-            <a href="/instructions" class="btn btn-primary mx-2">使用說明</a>
-            <a href="/control_panel" class="btn btn-primary mx-2">控制面板</a>
-        </div>
+      <div class="card p-3" style="background-color: #FEE6C1">
+            <div class="card-body">
+                <h2 class="card-title text-center">主畫面</h2>
+                <div class="text-center mt-2">歡迎來到主頁面, {{ username }}</div>
+                <hr />
+                <!-- page tab button -->
+                <div class="d-flex justify-content-center my-4">
+                    <a href="/instructions" class="btn btn-primary mx-2">使用說明</a>
+                    <a href="/control_panel" class="btn btn-primary mx-2">控制面板</a>
+                </div>
 
-        <form id="submitForm" method="POST" action="/generate">
-            <h1 class="fw-bold text-center mb-4">病歷結構化系統</h1>
-            <label for="prompt">請輸入病歷：</label>
-            <textarea name="prompt" rows="15" class="form-control mb-3" id="prompt"></textarea>
-            <button type="submit" class="btn btn-primary w-100" id="submitBtn">提交</button>
-            <!-- 新增一個 img 元素來顯示 loading GIF -->
-            <div id="loadingContainer">
-                <img src="{{ url_for('static', filename='loading.gif') }}" id="loadingGif" />
+                <form id="submitForm" method="POST" action="/generate">
+                    <h1 class="fw-bold text-center mb-4">病歷結構化系統</h1>
+                    <label for="prompt">請輸入病歷：</label>
+                    <textarea name="prompt" rows="15" class="form-control mb-3" id="prompt"></textarea>
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary btn-small" id="submitBtn">提交</button>
+                    </div>
+                    <!-- 新增一個 img 元素來顯示 loading GIF -->
+                    <div id="loadingContainer">
+                        <img src="{{ url_for('static', filename='loading.gif') }}" id="loadingGif" />
+                    </div>
+                </form>
+
+                <div class="text-center mt-4">
+                    <a href="/logout" class="btn btn-danger">登出</a>
+                </div>
             </div>
-        </form>
-
-        <div class="result mt-5">
-            <table class="table table-striped">
-                <tr>
-                    <td>{{response_content}}</td>
-                </tr>
-            </table>
-        </div>
-        <div class="text-center mt-4">
-            <a href="/logout" class="btn btn-danger">登出</a>
         </div>
     </div>
 

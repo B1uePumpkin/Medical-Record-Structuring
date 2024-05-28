@@ -12,6 +12,17 @@ body {
     line-height: 1.6;
     background-color: #f4f4f4;
     padding: 20px;
+    background-color: #f4f4f4;
+    padding: 20px;
+    background-image: url('/static/bg1.png');
+            /* 背景圖片填滿整個畫面 */
+            background-size: cover;
+            /* 背景圖片居中 */
+            background-position: center;
+            /* 不要重複背景圖片 */
+            background-repeat: no-repeat;
+            /* 將背景圖片固定在畫面中 */
+            background-attachment: fixed;
 }
 
 .container {

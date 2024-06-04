@@ -10,19 +10,17 @@
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
-    background-color: #f4f4f4;
-    padding: 20px;
-    background-color: #f4f4f4;
+    background-color: #ffffff;
     padding: 20px;
     background-image: url('/static/bg1.png');
-            /* 背景圖片填滿整個畫面 */
-            background-size: cover;
-            /* 背景圖片居中 */
-            background-position: center;
-            /* 不要重複背景圖片 */
-            background-repeat: no-repeat;
-            /* 將背景圖片固定在畫面中 */
-            background-attachment: fixed;
+    /* 背景圖片填滿整個畫面 */
+    background-size: cover;
+    /* 背景圖片居中 */
+    background-position: center;
+    /* 不要重複背景圖片 */
+    background-repeat: no-repeat;
+    /* 將背景圖片固定在畫面中 */
+    background-attachment: fixed;
 }
 
 .container {
@@ -32,16 +30,17 @@ body {
 
 h1 {
     margin-bottom: 20px;
+    text-align: center;
 }
 
 table {
     width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
+    border-collapse: collapse; /* 合并边框 */
+    border: 1px solid #ddd !important; /* 添加边框 */
 }
 
 th, td {
-    border: 1px solid #ddd;
+    border: 1px solid #ddd !important; /* 添加单元格边框 */
     padding: 8px;
 }
 
@@ -54,7 +53,7 @@ th {
     padding: 8px 16px;
     border: none;
     background-color: #189e45; /* 確認存儲按鈕的顏色 */
-    color: #fff;
+    color: #fff !important;
     text-decoration: none;
     cursor: pointer;
     border-radius: 5px; /* 設置按鈕邊角為圓弧 */
@@ -62,15 +61,15 @@ th {
 }
 
 .confirm-btn:hover {
-    background-color: #007bff; /* 滑鼠懸停時的顏色 */
+    background-color: #007bff !important; /* 滑鼠懸停時的顏色 */
 }
 
 .download-btn {
     display: inline-block;
     padding: 8px 16px;
     border: none;
-    background-color: #007bff; /* 下載按鈕的顏色 */
-    color: #fff;
+    background-color: #007bff !important; /* 下載按鈕的顏色 */
+    color: #fff !important;
     text-decoration: none;
     cursor: pointer;
     border-radius: 5px; /* 設置按鈕邊角為圓弧 */
@@ -78,5 +77,5 @@ th {
 }
 
 .download-btn:hover {
-    background-color: #189e45; /* 滑鼠懸停時的顏色 */
+    background-color: #189e45 !important; /* 滑鼠懸停時的顏色 */
 }

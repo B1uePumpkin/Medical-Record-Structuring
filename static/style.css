@@ -13,14 +13,14 @@ body {
     background-color: #f4f4f4;
     padding: 20px;
     background-image: url('/static/bg1.png');
-            /* 背景圖片填滿整個畫面 */
-            background-size: cover;
-            /* 背景圖片居中 */
-            background-position: center;
-            /* 不要重複背景圖片 */
-            background-repeat: no-repeat;
-            /* 將背景圖片固定在畫面中 */
-            background-attachment: fixed;
+    /* 背景圖片填滿整個畫面 */
+    background-size: cover;
+    /* 背景圖片居中 */
+    background-position: center;
+    /* 不要重複背景圖片 */
+    background-repeat: no-repeat;
+    /* 將背景圖片固定在畫面中 */
+    background-attachment: fixed;
 }
 
 .container {
@@ -52,7 +52,7 @@ input[type="submit"],
     display: inline-block;
     padding: 8px 16px;
     border: none;
-    background-color: #007bff;
+    background-color: #38B6FF;
     color: #fff;
     text-decoration: none;
     cursor: pointer;

@@ -1,0 +1,46 @@
+/* navbar.css */
+
+.navbar {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 50px; /* 固定高度 */
+    z-index: 1000; /* 确保导航栏在最上层 */
+    font-family: Arial, sans-serif; /* 设置字体 */
+}
+
+.navbar a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+    font-size: 16px; /* 设置字体大小 */
+}
+
+/* footer.css */
+
+.footer {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    height: 50px; /* 固定高度 */
+    bottom: 0;
+    z-index: 999; /* 确保页脚在最上层 */
+    font-family: Arial, sans-serif; /* 设置字体 */
+}
+
+.footer p {
+    margin: 0; /* 移除段落的默认间距 */
+    font-size: 16px; /* 设置字体大小 */
+}
+.content {
+    margin-top: 70px; /* 与导航栏的高度相同 */
+    margin-bottom: 50px; /* 与页脚的高度相同 */
+    padding: 20px; /* 添加内边距，使内容与边框有间隔 */
+}

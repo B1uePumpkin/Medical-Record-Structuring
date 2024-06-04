@@ -5,34 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>確認資料</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='confirm.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='navbar.css') }}">
 </head>
 <body>
+    <div class="navbar">
+        <a href="/home">首頁</a>
+        <a href="http://www.miia.fju.edu.tw/layout/oneorange/vvindex.jsp" target="_blank">關於我們</a>
+        <a href="#">服務</a>
+        <a href="#">聯繫我們</a>
+    </div>
+    <div class="content">
     <form method="post" action="/save_to_mongoDB">
         <input type="hidden" name="data" value="{{ data }}">
-        <h1>請確認以下病歷資料</h1>
-        <table>
-            <tr>
-                <th>欄位</th>
-                <th>資料</th>
-            </tr>
-            {% for key, value in data.items() %}
-            <tr>
-                <td>{{ key }}</td>
-                <td>{{ value }}</td>
-            </tr>
-            {% endfor %}
-        </table>
-        <div class="d-flex justify-content-center my-4">
-            <input type="submit" value="確認存儲" class="confirm-btn">
-        </div>
-        <br><br>
-        <div class="d-flex justify-content-center my-4">
-            <a href="/download_txt" class="btn download-btn">下載病例表格 (txt)</a>
-            <a href="/download_word" class="btn download-btn">下載病例表格 (docx)</a>
-        </div>
-        <div class="button-wrapper">
-            <a href="/home" class="btn home-btn">回到首頁</a>
-        </div>
+        <h1 >請確認以下病歷資料</h1>
+            <div class="card p-3" style="background-color: #ffffff">
+                <div class="card-body">
+                    <table>
+                        <tr>
+                            <th>欄位</th>
+                            <th>資料</th>
+                        </tr>
+                        {% for key, value in data.items() %}
+                        <tr>
+                            <td>{{ key }}</td>
+                            <td>{{ value }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    <br>
+                    <input type="submit" value="確認存儲" class="confirm-btn">
+                    <br>
+                    <br>
+                    <a href="/download_txt" class="btn download-btn">下載病例表格 (txt)</a>
+                    <a href="/download_word" class="btn download-btn">下載病例表格 (docx)</a>
+                </div>
+            </div>
+    </div>
     </form>
+    <div class="footer">
+        <p>&copy; 2024 FJU Medical-Record-Structuring</p>
+    </div>
 </body>
 </html>

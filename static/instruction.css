@@ -6,7 +6,6 @@ body {
     margin: 0;
     padding: 0;
     background-color: #e9ecef; /* 背景顏色 */
-    background-color: #f4f4f4;
     padding: 20px;
     background-image: url('/static/bg1.png');
             /* 背景圖片填滿整個畫面 */
@@ -23,7 +22,7 @@ body {
     max-width: 800px;
     margin: 50px auto;
     padding: 20px;
-    background-color: #ffffff; /* 白色容器 */
+    background-color: #E9EAF6; /* 白色容器 */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 

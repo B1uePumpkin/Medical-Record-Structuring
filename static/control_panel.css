@@ -12,17 +12,15 @@ body {
     line-height: 1.6;
     background-color: #f4f4f4;
     padding: 20px;
-    background-color: #f4f4f4;
-    padding: 20px;
     background-image: url('/static/bg1.png');
-            /* 背景圖片填滿整個畫面 */
-            background-size: cover;
-            /* 背景圖片居中 */
-            background-position: center;
-            /* 不要重複背景圖片 */
-            background-repeat: no-repeat;
-            /* 將背景圖片固定在畫面中 */
-            background-attachment: fixed;
+    /* 背景圖片填滿整個畫面 */
+    background-size: cover;
+    /* 背景圖片居中 */
+    background-position: center;
+    /* 不要重複背景圖片 */
+    background-repeat: no-repeat;
+    /* 將背景圖片固定在畫面中 */
+    background-attachment: fixed;
 }
 
 .container {
@@ -39,7 +37,7 @@ h2 {
 }
 
 .form-container, .result-container {
-    background-color: #fff;
+    background-color: #E9EAF6;
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 5px;
@@ -118,4 +116,61 @@ button[name="action"][value="delete"] {
 
 button[name="action"][value="delete"]:hover {
     background-color: #c82333;
+}
+/* control_panel.css */
+
+/* 其他樣式 */
+
+.image-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 500px;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(255, 255, 255, 0.8); /* 霧面效果背景 */
+}
+
+.image-modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+}
+
+.image-modal-content, .image-modal-content:hover {
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+    from {-webkit-transform:scale(0)}
+    to {-webkit-transform:scale(1)}
+}
+
+@keyframes zoom {
+    from {transform:scale(0)}
+    to {transform:scale(1)}
+}
+
+.visual-btn {
+    background-color: #f5deb3; /* 米色 */
+    color: black;
+    border: none;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px; /* 圓角 */
+}
+
+.visual-btn:hover {
+    background-color: #e6c69d; /* 懸停顏色 */
 }
